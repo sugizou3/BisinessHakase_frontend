@@ -38,7 +38,7 @@ export default function MessageCard() {
   const onLongPress = () => {
   };
 
-  const onClick = () => {
+  const Click = () => {
     handleExpandClick()
   };
 
@@ -47,7 +47,7 @@ export default function MessageCard() {
     delay: 200,
   };
 
-  const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
+  const longPressEvent = useLongPress(onLongPress, Click, defaultOptions);
 
   useEffect(() => {}, []);
 
