@@ -3,6 +3,8 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
+import Divider from '@mui/material/Divider';
 
 const SearchComponent = (props) => {
   return (
@@ -14,16 +16,20 @@ const SearchComponent = (props) => {
         p: "2px 4px",
         display: "flex",
         alignItems: "center",
-        width: 600,
         height: 42,
       }}
+      className="w-full mx-5 "
     >
       <InputBase
-        sx={{ ml: 1, flex: 1 }}
+        sx={{ mx: 1, flex: 1 }}
         placeholder="検索"
         inputProps={{ "aria-label": "検索" }}
       />
-      <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+      <IconButton type="submit" sx={{ p: "10px" }} aria-label="delete" disableRipple={true} >
+        <ClearIcon />
+      </IconButton>
+      <Divider orientation="vertical" flexItem />
+      <IconButton type="submit" sx={{ p: "10px" }} aria-label="search" disableRipple={true} >
         <SearchIcon />
       </IconButton>
     </Paper>

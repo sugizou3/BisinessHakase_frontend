@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { SearchComponent } from "./index.js";
 import Link from "next/link";
 
@@ -16,17 +16,18 @@ export default function AppBar() {
       <div className="flex items-center justify-center flex-grow h-10">
         <SearchComponent />
       </div>
-      <div className="flex items-center justify-center space-x-4">
+
       <Link href="signup/">
         <Button
           type="submit"
           fullWidth
           variant="outlined"
-          sx={{ mt: 3, mb: 2, mr: 3, fontWeight : "bold", }}
+          sx={{ fontWeight: "bold", width:90 }}
+          className="flex items-center "
         >
           ログイン
-        </Button></Link>
-      </div>
+        </Button>
+      </Link>
     </div>
   );
 }

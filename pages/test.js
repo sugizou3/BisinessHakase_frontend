@@ -16,7 +16,7 @@ export default function Home() {
         <AppBar />
       </header>
       <div className="pt-14">
-        <div className="px-3 bg-gray-100 h-full w-full  flex  justify-between fixed">
+        <div className="px-3 bg-stone-100 h-full w-full  flex  justify-between fixed">
           <div className="pt-6  bg-white minWidth-leftContent  h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar ">
             22222
             <IconMenu />
@@ -36,12 +36,12 @@ export default function Home() {
           </div>
           <div className="pt-6 bg-white minWidth-rightContent  h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar ">
             333333
-            <div className="h-48 bg-gray-300 my-5"></div>
-            <div className="h-24 bg-gray-300 my-5"></div>
-            <div className="h-48 bg-gray-300 my-5"></div>
-            <div className="h-24 bg-gray-300 my-5"></div>
-            <div className="h-24 bg-gray-300 my-5"></div>
-            <div className="h-48 bg-gray-300 my-5"></div>
+            <div className="h-48 bg-stone-300 my-5"></div>
+            <div className="h-24 bg-stone-300 my-5"></div>
+            <div className="h-48 bg-stone-300 my-5"></div>
+            <div className="h-24 bg-stone-300 my-5"></div>
+            <div className="h-24 bg-stone-300 my-5"></div>
+            <div className="h-48 bg-stone-300 my-5"></div>
           </div>
         </div>
       </div>

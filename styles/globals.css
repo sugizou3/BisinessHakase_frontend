@@ -18,7 +18,7 @@
     transition: all 0.5s cubic-bezier(0, 1, 0, 1);
   }
   .minWidth-leftContent {
-    min-width: 220px;
+    min-width: 80px;
   }
 
   .minWidth-rightContent {
@@ -41,11 +41,18 @@
   }
 
   .font-NotoSansJP {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: "Noto Sans JP", sans-serif;
     font-weight: ;
   }
   .font-Roboto {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: ;
+  }
+
+  @media (max-width: 1279px) {
+    .axisXCenterBreakpoint {
+      justify-content: center;
+      flex-direction: column;
+    }
   }
 }
