@@ -12,7 +12,7 @@ export default function IconMenu() {
   return (
     <Paper  className="xl:w-80 max-w-full w-24 " >
       <MenuList>
-        <Link href="signup/">
+        <Link href="/">
           <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
             <div className="text-center ">
               <HomeIcon color="action" className=" mx-4 mb-1 " />
@@ -20,21 +20,21 @@ export default function IconMenu() {
             <div className="text-center text-sm">ホーム</div>
           </div>
         </Link>
-        <Link href="signup/">
+        <Link href="search/">
           <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
           <div className="text-center "><SearchIcon color="action" className="mx-4 mb-1 " /></div>
             
             <div className="text-center text-sm">検索</div>
           </div>
         </Link>
-        <Link href="signup/">
+        <Link href="create/">
           <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
           <div className="text-center "><BorderColorIcon color="action" className="mx-4 mb-1 " /></div>
             
             <div className="text-center text-sm">作成</div>
           </div>
         </Link>
-        <Link href="signup/">
+        <Link href="mypage/">
           <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
           <div className="text-center "><MenuBookIcon color="action" className="mx-4 mb-1 " /></div>
             

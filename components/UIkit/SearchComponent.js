@@ -18,7 +18,7 @@ const SearchComponent = (props) => {
         alignItems: "center",
         height: 42,
       }}
-      className="w-full mx-5 "
+      className="w-full maxWidth-SearchComponent mx-5 "
     >
       <InputBase
         sx={{ mx: 1, flex: 1 }}

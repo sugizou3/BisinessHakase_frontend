@@ -25,6 +25,10 @@
     min-width: 300px;
   }
 
+  .maxWidth-SearchComponent {
+    max-width: 600px;
+  }
+
   .showContent {
     height: auto;
     max-height: 9999px;
@@ -54,5 +58,15 @@
       justify-content: center;
       flex-direction: column;
     }
+  }
+
+  .chipBar {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  
+  .chipBar--unpinned {
+    -webkit-transform: translateY(-150%);
+    transform: translateY(-150%);
   }
 }
