@@ -11,6 +11,7 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadIcon from "@mui/icons-material/Download";
+import { useLongPress } from "./";
 
 const ExpandMore = muiStyled((props) => {
   const { expand, ...other } = props;
@@ -23,63 +24,8 @@ const ExpandMore = muiStyled((props) => {
   }),
 }));
 
-const check_sec = 500; //ミリ秒
-const target_element = document.getElementsByClassName("test");
-
-function long_press(el, nf, lf, sec) {
-  let longclick = false;
-  let longtap = false;
-  let touch = false;
-  let timer;
-  el.addEventListener("touchstart", () => {
-    touch = true;
-    longtap = false;
-    timer = setTimeout(() => {
-      longtap = true;
-      lf();
-    }, sec);
-  });
-  el.addEventListener("touchend", () => {
-    if (!longtap) {
-      clearTimeout(timer);
-      nf();
-    } else {
-      touch = false;
-    }
-  });
-
-  el.addEventListener("mousedown", () => {
-    if (touch) return;
-    longclick = false;
-    timer = setTimeout(() => {
-      longclick = true;
-      lf();
-    }, sec);
-  });
-  el.addEventListener("click", () => {
-    if (touch) {
-      touch = false;
-      return;
-    }
-    if (!longclick) {
-      clearTimeout(timer);
-      nf();
-    }
-  });
-}
-
 export default function MessageCard() {
   const [expanded, setExpanded] = useState(false);
-  function normal_func() {
-    setExpanded(!expanded);
-  }
-  function long_func() {
-    // setExpanded(!expanded);
-  }
-
-  useEffect(() => {
-    long_press(target_element, normal_func, long_func, check_sec);
-  }, []);
 
   const parentEventStopper = (e) => {
     e.stopPropagation();
@@ -89,8 +35,24 @@ export default function MessageCard() {
     setExpanded(!expanded);
   };
 
+  const onLongPress = () => {
+  };
+
+  const onClick = () => {
+    handleExpandClick()
+  };
+
+  const defaultOptions = {
+    shouldPreventDefault: true,
+    delay: 200,
+  };
+
+  const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
+
+  useEffect(() => {}, []);
+
   return (
-    <div onClick={handleExpandClick}>
+    <div  {...longPressEvent}>
       <Card className={expanded ? "showContent test " : "hideContent test"}>
         <CardHeader
           avatar={

@@ -22,14 +22,31 @@ export default function IconMenu() {
   return (
     <Paper sx={{ width: 320, maxWidth: "100%" }}>
       <MenuList>
-        <Link href="/">
-          <MenuItem sx={{ height: 45 }}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText>ホーム</ListItemText>
-          </MenuItem>
+      <Link href="signup/">
+          <div className="flex hover:bg-gray-100 h-12 items-center font-NotoSansJP">
+            <HomeIcon color="action" className="mx-4 " />
+            <div>ホーム</div>
+          </div>
         </Link>
+        <Link href="signup/">
+          <div className="flex hover:bg-gray-100 h-12 items-center font-NotoSansJP">
+            <SearchIcon color="action" className="mx-4 " />
+            <div>検索</div>
+          </div>
+        </Link>
+        <Link href="signup/">
+          <div className="flex hover:bg-gray-100 h-12 items-center font-NotoSansJP">
+            <BorderColorIcon color="action" className="mx-4 " />
+            <div>作成</div>
+          </div>
+        </Link>
+        <Link href="signup/">
+          <div className="flex hover:bg-gray-100 h-12 items-center font-NotoSansJP">
+            <MenuBookIcon color="action" className="mx-4 " />
+            <div>マイページ</div>
+          </div>
+        </Link>
+        <Divider />
         <Link href="search/">
           <MenuItem sx={{ height: 45 }}>
             <ListItemIcon>
@@ -38,32 +55,9 @@ export default function IconMenu() {
             <ListItemText>検索</ListItemText>
           </MenuItem>
         </Link>
-        <Link href="create/">
-          <MenuItem sx={{ height: 45 }}>
-            <ListItemIcon>
-              <BorderColorIcon />
-            </ListItemIcon>
-            <ListItemText>作成</ListItemText>
-          </MenuItem>
-        </Link>
-        <Link href="mypage/">
-          <MenuItem sx={{ height: 45 }}>
-            <ListItemIcon>
-              <MenuBookIcon />
-            </ListItemIcon>
-            <ListItemText>マイページ</ListItemText>
-          </MenuItem>
-        </Link>
-        <Divider />
-        <Link href="signup/">
-          <MenuItem sx={{ height: 45 }}>
-            <ListItemIcon>
-              <Cloud fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Web Clipboard</ListItemText>
-          </MenuItem>
-        </Link>
       </MenuList>
+
+      
     </Paper>
   );
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import Button from '@mui/material/Button';
 import { SearchComponent } from "./index.js";
+import Link from "next/link";
 
 export default function AppBar() {
   return (
@@ -16,6 +17,7 @@ export default function AppBar() {
         <SearchComponent />
       </div>
       <div className="flex items-center justify-center space-x-4">
+      <Link href="signup/">
         <Button
           type="submit"
           fullWidth
@@ -23,7 +25,7 @@ export default function AppBar() {
           sx={{ mt: 3, mb: 2, mr: 3, fontWeight : "bold", }}
         >
           ログイン
-        </Button>
+        </Button></Link>
       </div>
     </div>
   );

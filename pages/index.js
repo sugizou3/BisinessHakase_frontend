@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import "tailwindcss/tailwind.css";
-import { MessageCard, IconMenu, ChipBar, AppBar } from "../components/UIkit";
+import { MessageCard, IconMenu, ChipBar, AppBar, } from "../components/UIkit";
 
 
 export default function Home() {
