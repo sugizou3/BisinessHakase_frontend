@@ -18,12 +18,12 @@ export default function Home() {
         <ChipBar />
       </header>
 
-      <div className="px-3 pt-24 grid grid-cols-12 gap-5 bg-gray-100 h-full w-full fixed">
-        <div className="pt-6 bg-white col-span-2 h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
+      <div className="px-3 pt-24 bg-gray-100 h-full w-full flex fixed  justify-between">
+        <div className="pt-6  bg-white minWidth-leftContent  h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar ">
           22222
           <IconMenu />
         </div>
-        <div className="pt-6 bg-white col-span-7 h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
+        <div className="pt-6 bg-white w-full mx-2  h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar ">
           77777
           <MessageCard />
           <MessageCard />
@@ -36,7 +36,7 @@ export default function Home() {
           <MessageCard />
           <MessageCard />
         </div>
-        <div className="pt-6 bg-white col-span-3 h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
+        <div className="pt-6 bg-white minWidth-rightContent  h-full overflow-y-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar ">
           333333
           <div className="h-48 bg-gray-300 my-5"></div>
           <div className="h-24 bg-gray-300 my-5"></div>

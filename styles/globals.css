@@ -11,5 +11,26 @@
     /* Chrome, Safari 対応 */
     display: none;
   }
-  
+
+  .hideContent {
+    max-height: 300px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+  }
+  .minWidth-leftContent {
+    min-Width:220px
+  }
+
+  .minWidth-rightContent {
+    min-Width:300px
+  }
+
+  .showContent {
+    height: auto;
+    max-height: 9999px;
+    transition: all 0.5s cubic-bezier(1, 0, 1, 0);
+  }
+  .gradientWhite{
+    background: linear-gradient(rgba(255,255,255,0) ,rgba(255,255,255,0.5) 30%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,1));
+}
 }
