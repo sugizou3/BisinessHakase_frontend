@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 // import {styled} from 'styled-component';
 import { styled as muiStyled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -52,7 +53,8 @@ export default function MessageCard({ post }) {
   useEffect(() => {}, []);
 
   return (
-    <div  >
+    <div>
+      <Link href={`/posts/${post.id}/`}>
       <Card className={expanded ? "showContent test " : "hideContent test"}>
         <CardHeader
           avatar={
@@ -95,7 +97,7 @@ export default function MessageCard({ post }) {
           </Typography>
           <div className=" w-full h-10"></div>
         </CardContent>
-      </Card>
+      </Card></Link>
       <div className=" w-full h-20  text-center relative bottom-20 z-10 gradientWhite" {...longPressEvent}>
         <ExpandMore
           expand={expanded}

@@ -1,9 +1,24 @@
+import { useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import Layout from "../components/Layout";
 import { MessageCard } from "../components/UIkit";
 import { getAllPostsData } from "../lib/posts";
+import useSWR from "swr";
 
-export default function Home({ filteredPosts }) {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`;
+
+export default function Home({ staticfilteredPosts }) {
+  const { data: posts, mutate } = useSWR(apiUrl, fetcher, {
+    fallbackData: staticfilteredPosts,
+  });
+  const filteredPosts = posts?.sort(
+    (a, b) => new Date(b.created_on) - new Date(a.created_on)
+  );
+  useEffect(() => {
+    mutate();
+  }, []);
+
   return (
     <Layout title="Home">
       {filteredPosts &&
@@ -13,6 +28,6 @@ export default function Home({ filteredPosts }) {
 }
 
 export async function getStaticProps() {
-  const filteredPosts = await getAllPostsData();
-  return { props: { filteredPosts } };
+  const staticfilteredPosts = await getAllPostsData();
+  return { props: { staticfilteredPosts }, revalidate: 3  };
 }
