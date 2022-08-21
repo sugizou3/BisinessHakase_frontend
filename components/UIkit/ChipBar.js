@@ -4,8 +4,8 @@ import { Chip } from "./";
 
 export default function ChipBar() {
   return (
-    <div className="flex items-center px-6 py-2 px-4 space-x-3 overflow-x-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar ">
-      <Chip name="python" />
+    <div className="flex items-center px-6 py-2 px-4 space-x-3 overflow-x-scroll  hidden-scrollbar hidden-scrollbar::-webkit-scrollbar whitespace-nowrap ">
+      <Chip name="python" className="inline-block"/>
       <Chip name="javascript" />
       <Chip name="数学" />
       <Chip name="音楽" />
