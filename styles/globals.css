@@ -12,6 +12,10 @@
     display: none;
   }
 
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
+  }
+
   .hideContent {
     max-height: 300px;
     overflow: hidden;
