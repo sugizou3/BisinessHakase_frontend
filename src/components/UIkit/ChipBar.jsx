@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Chip } from "./";
+import { Chip } from ".";
 
 export default function ChipBar() {
   return (

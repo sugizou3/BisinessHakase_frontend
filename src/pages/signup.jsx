@@ -143,7 +143,7 @@ export default function Auth() {
                 }}
               />
 
-              <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold mt-5 mb-5 w-full py-2 px-4 rounded">
+              <button className="bg-blue-600 hover:bg-blue-500 text-white font-bold mt-5 mb-5 w-full py-2 px-4 rounded">
                 ログイン
               </button>
               <div className="mt-16 text-center flex flex-col">

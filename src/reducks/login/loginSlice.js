@@ -1,25 +1,3 @@
-// import { createSlice } from "@reduxjs/toolkit";
-
-// export const loginSlice = createSlice({
-//   name: "login",
-//   initialState: {
-//     login:false,
-//   },
-//   reducers: {
-//     signup: () => {
-//       login = true;
-//     },
-//     signout:() => {
-//       login = false;
-//     },
-//   },
-// });
-
-// export const { signup, signout } = loginSlice.actions;
-
-// export const selectLogins = (state) => state.login.logins;
-
-// export default loginSlice.reducer;
 
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";

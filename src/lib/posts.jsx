@@ -6,7 +6,7 @@ export async function getAllPostsData() {
   );
   const posts = await res.json();
   const filteredPost = posts.sort(
-    (a, b) => new Date(b.created_on) - new Date(a.created_on)
+    (a, b) => new Date(a.created_on) - new Date(b.created_on)
   );
   return filteredPost;
 }

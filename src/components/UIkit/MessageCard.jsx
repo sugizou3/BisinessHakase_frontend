@@ -8,11 +8,10 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadIcon from "@mui/icons-material/Download";
-import { useLongPress } from "./";
+import { useLongPress } from ".";
 
 const ExpandMore = muiStyled((props) => {
   const { expand, ...other } = props;
@@ -48,12 +47,50 @@ export default function MessageCard({ post }) {
     delay: 200,
   };
 
+
+  const timeDiffrence = () => {
+    var diff = new Date() - new Date( post.created_on);
+    var mes_diff;
+    var min = parseInt(diff/1000/60);
+
+    if (min>=60) {
+      var hour = parseInt(min/60);
+      if (hour>=24) {
+        var day = parseInt(min/24);
+        if (day<=7) {
+          mes_diff = day + "日前";
+        }else if(day<=31) {
+          var week = parseInt(day/7);
+          mes_diff = week + "周間前"
+        }else if (day<=365) {
+          var month = parseInt(day/31);
+          mes_diff = month + "か月前"
+        }else{
+          var year = parseInt(day/365);
+          mes_diff = year + "年前"
+        }
+      }else{
+        mes_diff = hour + "時間前";
+      }
+    }else{
+      if (min>0) {
+        mes_diff = min + "分前";
+      }else{
+        mes_diff ="たった今"
+      }
+    }
+    return mes_diff;
+    
+  }
+  
+  
+
   const longPressEvent = useLongPress(onLongPress, Click, defaultOptions);
 
   useEffect(() => {}, []);
 
   return (
-    <div>
+    <div className="-mb-16">
       <Link href={`/posts/${post.id}/`}>
       <Card className={expanded ? "showContent test " : "hideContent test"}>
         <CardHeader
@@ -76,7 +113,7 @@ export default function MessageCard({ post }) {
             </div>
           }
           title={ post.userPost }
-          subheader={ post.created_on }
+          subheader={ timeDiffrence() }
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">

@@ -6,16 +6,56 @@ import Button from "@mui/material/Button";
 import Layout from "../components/Layout";
 import { MessageCard } from "../components/UIkit";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthen } from "../src/reducks/login/loginSlice";
+import { selectAuthen } from "../reducks/login/loginSlice";
+import Cookie from "universal-cookie";
+import { useRouter } from "next/router";
+
+const cookie = new Cookie();
 
 export default function Search() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const authen = useSelector(selectAuthen);
 
-  const [value, setValue] = useState("");
+  const [main, setMain] = useState("");
+  const [booktitle, setBooktitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [sub, setSub] = useState("");
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const create = async (e) => {
+    e.preventDefault();
+    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`, {
+      method: "POST",
+      body: JSON.stringify({
+        main: main,
+        booktitle: booktitle,
+        author: author,
+        sub: sub,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${cookie.get("access_token")}`,
+      },
+    }).then((res) => {
+      if (res.status === 401) {
+        alert("JWT Token not valid");
+      }
+    });
+    router.push("/");
+  };
+
+  const handleChangeMain = (event) => {
+    setMain(event.target.value);
+    console.log(main);
+  };
+  const handleChangeBooktitle = (event) => {
+    setBooktitle(event.target.value);
+  };
+  const handleChangeAuthor = (event) => {
+    setAuthor(event.target.value);
+  };
+  const handleChangeSub = (event) => {
+    setSub(event.target.value);
   };
 
   return (
@@ -29,6 +69,7 @@ export default function Search() {
                 label="題名"
                 variant="standard"
                 className="mb-12"
+                onChange={handleChangeMain}
               />
               <div className=" self-end w-3/5">
                 <TextField
@@ -37,6 +78,7 @@ export default function Search() {
                   variant="standard"
                   size="small"
                   className="mb-6  w-full"
+                  onChange={handleChangeBooktitle}
                 />
                 <TextField
                   id="standard-basic"
@@ -44,6 +86,7 @@ export default function Search() {
                   variant="standard"
                   size="small"
                   className="mb-16 w-full"
+                  onChange={handleChangeAuthor}
                 />
               </div>
               <TextField
@@ -52,8 +95,8 @@ export default function Search() {
                 multiline
                 minRows={3}
                 maxRows={12}
-                value={value}
-                onChange={handleChange}
+                value={sub}
+                onChange={handleChangeSub}
                 variant="filled"
                 className="mb-16"
               />
@@ -61,8 +104,9 @@ export default function Search() {
               <Button
                 variant="outlined"
                 className="flex mb-16 w-24 self-center"
+                onClick={create}
               >
-                Contained
+                作成
               </Button>
             </div>
           </div>

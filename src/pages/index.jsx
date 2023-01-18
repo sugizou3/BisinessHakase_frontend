@@ -5,31 +5,26 @@ import { MessageCard } from "../components/UIkit";
 import { getAllPostsData } from "../lib/posts";
 import useSWR from "swr";
 
-
-
-
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`;
 
 export default function Home({ staticfilteredPosts }) {
-
-
   const { data: posts, mutate } = useSWR(apiUrl, fetcher, {
     fallbackData: staticfilteredPosts,
   });
   const filteredPosts = posts?.sort(
-    (a, b) => new Date(b.created_on) - new Date(a.created_on)
+    (b, a) => new Date(a.created_on) - new Date(b.created_on)
   );
   useEffect(() => {
     mutate();
   }, []);
+
 
   return (
     <Layout title="Home">
       {filteredPosts &&
         filteredPosts.map((post) => <MessageCard key={post.id} post={post} />)}
     </Layout>
-    
   );
 }
 

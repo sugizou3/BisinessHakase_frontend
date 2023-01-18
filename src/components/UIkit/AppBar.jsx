@@ -1,15 +1,13 @@
-import { SearchComponent } from "./index.js";
-import { ProRegIcon } from "./";
+import { SearchComponent } from "./index.jsx";
+import { ProRegIcon } from ".";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Cookie from "universal-cookie";
 import { useSelector, useDispatch } from "react-redux";
 
 
-const cookie = new Cookie();
 
 export default function AppBar() {
-  const router = useRouter();
+  
   const dispatch = useDispatch();
 
 
