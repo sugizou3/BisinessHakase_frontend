@@ -18,7 +18,7 @@ import {
   selectAuthen,
   editEmail,
   editPassword,
-} from "../../src/reducks/login/loginSlice.jsx";
+} from "../../src/reducks/login/loginSlice.js";
 
 const cookie = new Cookie();
 
