@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Layout from "../components/Layout";
 import { MessageCard } from "../components/UIkit";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthen } from "../reducks/login/loginSlice";
+import { selectAuthen } from "../src/reducks/login/loginSlice";
 import Cookie from "universal-cookie";
 import { useRouter } from "next/router";
 

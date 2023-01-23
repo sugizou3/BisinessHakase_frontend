@@ -56,7 +56,7 @@ export default function MessageCard({ post }) {
     if (min>=60) {
       var hour = parseInt(min/60);
       if (hour>=24) {
-        var day = parseInt(min/24);
+        var day = parseInt(hour/24);
         if (day<=7) {
           mes_diff = day + "日前";
         }else if(day<=31) {
