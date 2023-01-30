@@ -103,7 +103,7 @@ export default function MessageCard({ post }) {
 
   return (
     <div className="-mb-16">
-      <Link href={`/posts/${post.id}/`}>
+      <Link href={`/posts/${post.id}/`} passHref>
       <Card className={expanded ? "showContent test " : "hideContent test"}>
         <CardHeader
           avatar={

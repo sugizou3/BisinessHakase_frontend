@@ -3,6 +3,7 @@ import { ProRegIcon } from ".";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
+import Image from 'next/image'
 
 
 

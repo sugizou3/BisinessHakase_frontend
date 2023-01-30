@@ -78,7 +78,7 @@ export default function ProRegIcon() {
           >
             <Paper className="absolute top-14 right-1 w-44  min-w-max">
               <MenuList>
-                <Link href="/mypage">
+                <Link href="/mypage" passHref>
                   <MenuItem>
                     <ListItemIcon>
                       <AccountCircleOutlinedIcon fontSize="small" />

@@ -29,8 +29,11 @@ function stringToColor(string) {
     return color;
   }    
 
-export default function ProfileIcon({scale,profile=useSelector(selectProfile)}) {
- 
+export default function ProfileIcon({scale,profile=null}) {
+ const userProf = useSelector(selectProfile)
+ if (profile == null ) {
+    profile = userProf;
+ }
 
   return (
     <div>

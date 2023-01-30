@@ -137,7 +137,7 @@ export default function Auth() {
                      
                       }}
                     >
-                      You don't have a account ?
+                      You dont have a account ?
                     </span>
                   </div>
                 </form>
