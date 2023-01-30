@@ -8,8 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import Cookie from "universal-cookie";
+
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Link from "next/link";
@@ -20,37 +19,64 @@ import {
   editPassword,
 } from "../../src/reducks/login/loginSlice.js";
 
-const cookie = new Cookie();
+import {
+  selectOpenModal,
+  setOpenSignIn,
+  resetOpenModal,
+  fetchAsyncLogin,
+  setOpenModal,
+  selectProfile,
+  editNickname,
+  resetOpenProfile,
+} from "../../src/reducks/auth/authSlice.js";
+
+import { Auth, ProfileIcon } from ".";
+import { resetOpenNewPost } from "src/reducks/post/postSlice.js";
+import { Modal } from "@mui/material";
 
 export default function ProRegIcon() {
-  const [show, setShow] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const router = useRouter();
+  const profile = useSelector(selectProfile);
 
   const authen = useSelector(selectAuthen);
   const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch(editEmail(""));
-    dispatch(editPassword(""));
-    cookie.remove("access_token", { path: "/" });
-    router.push("/signup");
+    localStorage.removeItem("localJWT");
+    dispatch(editNickname(""));
+    dispatch(resetOpenProfile());
+    dispatch(resetOpenNewPost());
+    dispatch(setOpenModal());
   };
+
+  const openModal = useSelector(selectOpenModal);
 
   return (
     <div>
-      {authen.email ? (
+      {profile?.nickName ? (
         <div className="">
-          
-
-          <button className="pointer-events-auto"
-            onClick={() => {
-              setShow((prevState) => !prevState);
+          <button className="pointer-events-auto" onClick={handleOpen}>
+            <ProfileIcon />
+          </button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+            BackdropProps={{
+              style: {
+                backgroundColor: "transparent",
+              },
             }}
           >
-            <Avatar>H</Avatar>
-          </button>
-          {show ? (<div className="absolute right-1 w-64 h-full">
-            <Paper sx={{ width: 320, maxWidth: "100%" }}>
+            <Paper className="absolute top-14 right-1 w-44  min-w-max">
               <MenuList>
                 <Link href="/mypage">
                   <MenuItem>
@@ -69,21 +95,23 @@ export default function ProRegIcon() {
                 </MenuItem>
               </MenuList>
             </Paper>
-          </div>):(<div className="absolute right-1 w-64 h-full"></div>)}
+          </Modal>
         </div>
       ) : (
-        <Link href="signup/">
-          <Button
-            type="submit"
-            fullWidth
-            variant="outlined"
-            sx={{ fontWeight: "bold", width: 90 }}
-            className="flex items-center "
-          >
-            ログイン
-          </Button>
-        </Link>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ fontWeight: "bold", width: 90 }}
+          className="flex items-center "
+          onClick={async () => {
+            await dispatch(setOpenModal());
+          }}
+        >
+          ログイン
+        </Button>
       )}
+      <Auth></Auth>
     </div>
   );
 }

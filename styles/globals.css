@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-
   .w-96 {
     width: 24rem;
   }
@@ -12,26 +11,21 @@
     width: 25rem;
   }
 
-
   .w-104 {
     width: 26rem;
   }
-
 
   .w-108 {
     width: 27rem;
   }
 
-
   .w-112 {
     width: 28rem;
   }
 
-
   .w-116 {
     width: 29rem;
   }
-
 
   .w-120 {
     width: 30rem;
@@ -48,9 +42,6 @@
   .w-132 {
     width: 33rem;
   }
-
-
-
 
   .hidden-scrollbar {
     -ms-overflow-style: none; /* IE, Edge 対応 */
@@ -117,11 +108,9 @@
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-  
+
   .chipBar--unpinned {
     -webkit-transform: translateY(-150%);
     transform: translateY(-150%);
   }
-
-  
 }

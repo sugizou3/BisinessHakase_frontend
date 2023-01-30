@@ -2,12 +2,13 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 
 //const token = localStorage.localJWT;
 
 export const fetchAsyncLogin = createAsyncThunk("login/post", async (auth) => {
-  const res = await axios.post(`${NEXT_PUBLIC_RESTAPI_URL}authen/jwt/create`, auth, {
+  const res = await axios.post(`${NEXT_PUBLIC_RESTAPI_URL}authen/jwt/create/`, auth, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -64,7 +65,9 @@ const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAsyncLogin.fulfilled, (state, action) => {
       localStorage.setItem("localJWT", action.payload.access);
-      action.payload.access && (window.location.href = "/");
+      action.payload.access && (window.location.href = "/create");
+      const router = useRouter();
+      router.push("/create");
     });
     builder.addCase(fetchAsyncProf.fulfilled, (state, action) => {
       state.profile = action.payload;

@@ -6,7 +6,8 @@ export { default as AppBar } from "./AppBar.jsx";
 export { default as useLongPress } from "./useLongPress.jsx";
 export { default as Chip } from "./Chip.jsx";
 export { default as ProRegIcon } from "./ProRegIcon.jsx";
-
+export { default as Auth } from "./Auth.jsx";
+export { default as ProfileIcon } from "./ProfileIcon.jsx";
 
 
 

@@ -43,11 +43,11 @@ export default function IconMenu() {
           </div>
         </Link>
         <Divider className=" " />
-        <Link href="signup/">
+        <Link href="create/">
           <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
           <div className="text-center "><SearchIcon color="action" className="mx-4 mb-1 " /></div>
             
-            <div className="text-center text-sm">検索</div>
+            <div className="text-center text-sm">テスト</div>
           </div>
         </Link>
       </MenuList>

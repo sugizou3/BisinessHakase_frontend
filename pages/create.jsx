@@ -34,7 +34,7 @@ export default function Search() {
       }),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${cookie.get("access_token")}`,
+        Authorization: `JWT ${localStorage.localJWT}`,
       },
     }).then((res) => {
       if (res.status === 401) {
@@ -46,7 +46,6 @@ export default function Search() {
 
   const handleChangeMain = (event) => {
     setMain(event.target.value);
-    console.log(main);
   };
   const handleChangeBooktitle = (event) => {
     setBooktitle(event.target.value);
@@ -59,73 +58,66 @@ export default function Search() {
   };
 
   return (
-    <>
-      {authen.email ? (
-        <Layout title="Search">
-          <div className="flex justify-center p-8 bg-stone-50 h-full">
-            <div className="flex flex-col w-4/5 max-w-2xl">
-              <TextField
-                id="outlined-basic"
-                label="題名"
-                variant="standard"
-                className="mb-12"
-                onChange={handleChangeMain}
-              />
-              <div className=" self-end w-3/5">
-                <TextField
-                  id="standard-basic"
-                  label="本の名前"
-                  variant="standard"
-                  size="small"
-                  className="mb-6  w-full"
-                  onChange={handleChangeBooktitle}
-                />
-                <TextField
-                  id="standard-basic"
-                  label="本の著者"
-                  variant="standard"
-                  size="small"
-                  className="mb-16 w-full"
-                  onChange={handleChangeAuthor}
-                />
-              </div>
-              <TextField
-                id="filled-multiline-flexible"
-                label="内容"
-                multiline
-                minRows={3}
-                maxRows={12}
-                value={sub}
-                onChange={handleChangeSub}
-                variant="filled"
-                className="mb-16"
-              />
-
-              <Button
-                variant="outlined"
-                className="flex mb-16 w-24 self-center"
-                onClick={create}
-              >
-                作成
-              </Button>
-            </div>
+    <Layout title="Search">
+      <div className="flex justify-center p-8 bg-stone-50 h-full">
+        <div className="flex flex-col w-4/5 max-w-2xl">
+          <TextField
+            id="filled-multiline-flexible"
+            multiline
+            minRows={1}
+            maxRows={5}
+            label="題名"
+            variant="standard"
+            onChange={handleChangeMain}
+          />
+          <div className="h-10" />
+          <div className=" self-end w-3/5">
+            <TextField
+              id="filled-multiline-flexible"
+              multiline
+              minRows={1}
+              maxRows={5}
+              label="本の名前"
+              variant="standard"
+              size="small"
+              className="  w-full"
+              onChange={handleChangeBooktitle}
+            />
+            <div className="h-4" />
+            <TextField
+              id="filled-multiline-flexible"
+              multiline
+              minRows={1}
+              maxRows={5}
+              label="本の著者"
+              variant="standard"
+              size="small"
+              className=" w-full"
+              onChange={handleChangeAuthor}
+            />
           </div>
-        </Layout>
-      ) : (
-        <Layout title="Search">
-          <Link href="signup/">
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              sx={{ fontWeight: "bold", width: 90 }}
-              className="flex items-center "
-            >
-              ログイン
-            </Button>
-          </Link>
-        </Layout>
-      )}
-    </>
+          <div className="h-14" />
+          <TextField
+            id="filled-multiline-flexible"
+            label="内容"
+            multiline
+            minRows={3}
+            maxRows={12}
+            value={sub}
+            onChange={handleChangeSub}
+            variant="filled"
+          />
+          <div className="h-14" />
+
+          <Button
+            variant="outlined"
+            className=" w-24 self-center"
+            onClick={create}
+          >
+            作成
+          </Button>
+        </div>
+      </div>
+    </Layout>
   );
 }

@@ -1,6 +1,7 @@
 import "tailwindcss/tailwind.css";
 import Layout from "../components/Layout";
 import Avatar from "@mui/material/Avatar";
+import { Auth,ProfileIcon } from "../components/UIkit/index";
 
 export default function mypage() {
   return (
@@ -13,7 +14,7 @@ export default function mypage() {
             sx={{ width: 192, height: 192 }}
           /> */}
 
-          <Avatar src="/broken-image.jpg" sx={{ width: 192, height: 192 }} />
+          <ProfileIcon scale={192} />
         </div>
         <div className="bg-gray-400 w-132 h-48">
           <div className="flex">

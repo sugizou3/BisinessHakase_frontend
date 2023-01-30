@@ -41,6 +41,84 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
 
+  // const login = async () => {
+  //   if (isLoginView) {
+  //     await dispatch(fetchAsyncLogin(authen));
+  //   } else {
+  //     const result = await dispatch(fetchAsyncRegister(authen));
+
+  //     if (fetchAsyncRegister.fulfilled.match(result)) {
+  //       await dispatch(fetchAsyncLogin(authen));
+  //     }
+  //   }
+  // };
+
+  // return (
+  //   <>
+  //     <ThemeProvider theme={theme}>
+  //       <Container component="main" maxWidth="xs">
+  //         <CssBaseline />
+  //         <Box
+  //           sx={{
+  //             marginTop: 8,
+  //             display: "flex",
+  //             flexDirection: "column",
+  //             alignItems: "center",
+  //           }}
+  //         >
+  //           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+  //             <LockOutlinedIcon />
+  //           </Avatar>
+  //           <Typography component="h1" variant="h5">
+  //             {isLoginView ? "Sign in" : "Sign up"}
+  //           </Typography>
+  //           <Box component="form"  noValidate sx={{ mt: 1 }}>
+  //             <TextField
+  //               margin="normal"
+  //               required
+  //               fullWidth
+  //               id="email"
+  //               label="Email Address"
+  //               name="email"
+  //               autoComplete="email"
+  //               autoFocus
+  //               onChange={(e) => {
+  //                 dispatch(editEmail(e.target.value))
+  //               }}
+  //             />
+  //             <TextField
+  //               margin="normal"
+  //               required
+  //               fullWidth
+  //               name="password"
+  //               label="Password"
+  //               type="password"
+  //               id="password"
+  //               autoComplete="current-password"
+  //               onChange={(e) => {
+  //                 dispatch(editPassword(e.target.value))
+  //               }}
+  //             />
+
+  //             <button className="bg-blue-600 hover:bg-blue-500 text-white font-bold mt-5 mb-5 w-full py-2 px-4 rounded"
+  //               onClick={login}>
+  //             {isLoginView ? "ログイン" : "サインアップ"}
+  //             </button>
+  //             <div className="mt-16 text-center flex flex-col">
+  //               <span onClick={() => dispatch(toggleMode())}>
+  //                 {isLoginView ? "サインアップを行う" : "サインインする"}
+  //               </span>
+  //               <Link href="/" variant="body2" className="text-lg mt-10">
+  //                 ホーム
+  //               </Link>
+  //             </div>
+  //           </Box>
+  //         </Box>
+  //       </Container>
+  //     </ThemeProvider>
+  //   </>
+  // );
+
   const login = async () => {
     try {
       await fetch(

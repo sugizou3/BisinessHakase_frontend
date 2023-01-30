@@ -11,7 +11,13 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadIcon from "@mui/icons-material/Download";
-import { useLongPress } from ".";
+import { ProfileIcon, useLongPress } from ".";
+import { useSelector, useDispatch } from "react-redux";
+import {  
+ 
+  selectProfiles,
+  
+} from "../../src/reducks/auth/authSlice.js"
 
 const ExpandMore = muiStyled((props) => {
   const { expand, ...other } = props;
@@ -61,7 +67,7 @@ export default function MessageCard({ post }) {
           mes_diff = day + "日前";
         }else if(day<=31) {
           var week = parseInt(day/7);
-          mes_diff = week + "周間前"
+          mes_diff = week + "週間前"
         }else if (day<=365) {
           var month = parseInt(day/31);
           mes_diff = month + "か月前"
@@ -83,11 +89,17 @@ export default function MessageCard({ post }) {
     
   }
   
-  
-
   const longPressEvent = useLongPress(onLongPress, Click, defaultOptions);
 
   useEffect(() => {}, []);
+
+  const profiles = useSelector(selectProfiles);
+
+  const prof_array = profiles.filter((prof) => {
+    return prof.userProfile === post.userPost;
+  });
+  const prof = prof_array[0];
+
 
   return (
     <div className="-mb-16">
@@ -95,9 +107,7 @@ export default function MessageCard({ post }) {
       <Card className={expanded ? "showContent test " : "hideContent test"}>
         <CardHeader
           avatar={
-            <Avatar  aria-label="recipe">
-              R
-            </Avatar>
+            <ProfileIcon profile={prof}/>
           }
           action={
             <div>
@@ -112,7 +122,7 @@ export default function MessageCard({ post }) {
               </IconButton>
             </div>
           }
-          title={ post.userPost }
+          title={ prof.nickName }
           subheader={ timeDiffrence() }
         />
         <CardContent>
