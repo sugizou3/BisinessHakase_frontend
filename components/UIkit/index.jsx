@@ -8,7 +8,9 @@ export { default as Chip } from "./Chip.jsx";
 export { default as ProRegIcon } from "./ProRegIcon.jsx";
 export { default as Auth } from "./Auth.jsx";
 export { default as ProfileIcon } from "./ProfileIcon.jsx";
-
+export { default as UpContext } from "./UpContext.jsx";
+export { default as CommentBox } from "./CommentBox.jsx";
+export { default as CommentField } from "./CommentField.jsx";
 
 
 

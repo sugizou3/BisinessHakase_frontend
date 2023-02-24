@@ -48,7 +48,7 @@ export default function IconMenu() {
           </div>
         </Link>
         <Divider className=" " />
-        <Link href="create/" passHref>
+        <Link href="test/" passHref>
           <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
             <div className="text-center ">
               <SearchIcon color="action" className="mx-4 mb-1 " />

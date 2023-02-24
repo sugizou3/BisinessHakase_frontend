@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { selectProfile } from "../../src/reducks/auth/authSlice.js";
 import Avatar from "@mui/material/Avatar";
 
-import { Auth } from ".";
 
 
 function stringToColor(string) {
@@ -35,12 +34,14 @@ export default function ProfileIcon({scale,profile=null}) {
     profile = userProf;
  }
 
+ const textScale = scale*0.8;
+
   return (
     <div>
       {profile.img != null || profile.nickName == "anonymous" ? (
         <Avatar alt="Who?" src={profile.img} sx={{ width: scale, height: scale }} />
       ) : (
-        <Avatar  sx={{ width: scale, height: scale , bgcolor: stringToColor(profile.nickName),}}>{profile.nickName.slice(0, 1)}</Avatar>
+        <Avatar  sx={{ width: scale, height: scale, fontSize: textScale, bgcolor: stringToColor(profile.nickName),}}>{profile.nickName.slice(0, 1)}</Avatar>
       )}
     </div>
   );

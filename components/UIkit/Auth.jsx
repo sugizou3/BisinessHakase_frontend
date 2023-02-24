@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { TextField, CircularProgress } from "@mui/material";
-import { ModalFormik } from "."
 
 import {
   selectIsLoadingAuth,
@@ -53,8 +52,7 @@ export default function Auth() {
               const result = await dispatch(fetchAsyncLogin(values));
               if (fetchAsyncLogin.fulfilled.match(result)) {
                 await dispatch(fetchAsyncGetProfs());
-                //await dispatch(fetchAsyncGetPosts());
-                //await dispatch(fetchAsyncGetComments());
+               
                 await dispatch(fetchAsyncGetMyProf());
               }
               await dispatch(fetchCredEnd());
@@ -154,8 +152,6 @@ export default function Auth() {
                 await dispatch(fetchAsyncLogin(values));
                 await dispatch(fetchAsyncCreateProf({ nickName: "anonymous" }));
                 await dispatch(fetchAsyncGetProfs());
-                //await dispatch(fetchAsyncGetPosts());
-                //await dispatch(fetchAsyncGetComments());
                 await dispatch(fetchAsyncGetMyProf());
               }
               await dispatch(fetchCredEnd());

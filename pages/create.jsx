@@ -1,21 +1,13 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import "tailwindcss/tailwind.css";
-import Link from "next/link";
 import Button from "@mui/material/Button";
 import Layout from "../components/Layout";
-import { MessageCard } from "../components/UIkit";
-import { useSelector, useDispatch } from "react-redux";
-import { selectAuthen } from "../src/reducks/login/loginSlice";
 import Cookie from "universal-cookie";
 import { useRouter } from "next/router";
 
-const cookie = new Cookie();
-
 export default function Search() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const authen = useSelector(selectAuthen);
 
   const [main, setMain] = useState("");
   const [booktitle, setBooktitle] = useState("");

@@ -8,28 +8,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Button from "@mui/material/Button";
-
-import { useRouter } from "next/router";
-import { useState } from "react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectAuthen,
-  editEmail,
-  editPassword,
-} from "../../src/reducks/login/loginSlice.js";
-
-import {
-  selectOpenModal,
-  setOpenSignIn,
-  resetOpenModal,
-  fetchAsyncLogin,
   setOpenModal,
   selectProfile,
   editNickname,
   resetOpenProfile,
 } from "../../src/reducks/auth/authSlice.js";
-
 import { Auth, ProfileIcon } from ".";
 import { resetOpenNewPost } from "src/reducks/post/postSlice.js";
 import { Modal } from "@mui/material";
@@ -42,10 +28,8 @@ export default function ProRegIcon() {
   const handleClose = () => {
     setOpen(false);
   };
-  const router = useRouter();
   const profile = useSelector(selectProfile);
 
-  const authen = useSelector(selectAuthen);
   const dispatch = useDispatch();
 
   const logout = () => {
@@ -55,8 +39,6 @@ export default function ProRegIcon() {
     dispatch(resetOpenNewPost());
     dispatch(setOpenModal());
   };
-
-  const openModal = useSelector(selectOpenModal);
 
   return (
     <div>

@@ -1,13 +1,19 @@
-import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
-import loginReducer from "./login/loginSlice";
 import authReducer from "./auth/authSlice";
 import postReducer from "./post/postSlice";
 
 
+
+// export const store = configureStore({
+//   reducer: {
+//     auth: authReducer,
+//     post: postReducer,
+//   },
+// });
 
 // export default configureStore({
 //   reducer: {
@@ -20,8 +26,8 @@ import postReducer from "./post/postSlice";
 
 
 
+
 const reducers = combineReducers({
-  login: loginReducer,
     auth: authReducer,
     post: postReducer,
  });
@@ -32,7 +38,7 @@ const persistConfig = {
   key: 'root', // Storageに保存されるキー名を指定する
   storage, // 保存先としてlocalStorageがここで設定される
   //whitelist: ['name'] // Stateは`name`のみStorageに保存する
-  // blacklist: ['name2'] // `name2`は保存しない
+  //blacklist: ['auth'] // `name2`は保存しない
 }
 
 // 永続化設定されたReducerとして定義

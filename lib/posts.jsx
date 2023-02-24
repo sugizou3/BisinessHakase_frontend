@@ -16,6 +16,7 @@ export async function getAllPostIds() {
     new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`)
   );
   const posts = await res.json();
+  console.log(posts);
   return posts.map((post) => {
     return {
       params: {
