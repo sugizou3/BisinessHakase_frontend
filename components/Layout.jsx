@@ -9,7 +9,7 @@ export default function Layout({ children, title = "Default title" }) {
       <Head>
         <title>{title}</title>
         <meta name="description" content={title} />
-        <link rel="icon" href="/favicon.ico" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
 
       <header className="bg-white divide-y border-b fixed inset-x-0 z-10">

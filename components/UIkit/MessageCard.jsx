@@ -8,9 +8,21 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadIcon from "@mui/icons-material/Download";
-import { ProfileIcon, useLongPress, UpContext } from ".";
+import {
+  ProfileIcon,
+  useLongPress,
+  UpContext,
+  dateFunction,
+  FavoriteCheckBox,
+  DownloadCheckBox,
+} from ".";
 import { useSelector, useDispatch } from "react-redux";
-import { selectProfiles } from "../../src/reducks/auth/authSlice.js";
+import {
+  selectProfiles,
+  selectProfile,
+  fetchAsyncGetProfs,
+} from "../../src/reducks/auth/authSlice.js";
+import { fetchAsyncPatchLiked } from "src/reducks/post/postSlice";
 
 const ExpandMore = muiStyled((props) => {
   const { expand, ...other } = props;
@@ -23,15 +35,18 @@ const ExpandMore = muiStyled((props) => {
   }),
 }));
 
-
-
-export default function MessageCard({ post,comment }) {
+export default function MessageCard({ post, comments }) {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
+  
 
-  const parentEventStopper = (e) => {
-    e.stopPropagation();
-  };
+
+
+  useEffect(() => {
+    async () => {
+      await dispatch(fetchAsyncGetProfs());
+    };
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -48,62 +63,57 @@ export default function MessageCard({ post,comment }) {
     delay: 200,
   };
 
-  const timeDiffrence = () => {
-    var diff = new Date() - new Date(post.created_on);
-    var mes_diff;
-    var min = parseInt(diff / 1000 / 60);
-
-    if (min >= 60) {
-      var hour = parseInt(min / 60);
-      if (hour >= 24) {
-        var day = parseInt(hour / 24);
-        if (day <= 7) {
-          mes_diff = day + "日前";
-        } else if (day <= 31) {
-          var week = parseInt(day / 7);
-          mes_diff = week + "週間前";
-        } else if (day <= 365) {
-          var month = parseInt(day / 31);
-          mes_diff = month + "か月前";
-        } else {
-          var year = parseInt(day / 365);
-          mes_diff = year + "年前";
-        }
-      } else {
-        mes_diff = hour + "時間前";
-      }
-    } else {
-      if (min > 0) {
-        mes_diff = min + "分前";
-      } else {
-        mes_diff = "たった今";
-      }
-    }
-    return mes_diff;
-  };
-
   const longPressEvent = useLongPress(onLongPress, Click, defaultOptions);
 
-
   const profiles = useSelector(selectProfiles);
+  const myprofile = useSelector(selectProfile);
 
   const prof_array = profiles.filter((prof) => {
     return prof.userProfile === post.userPost;
   });
-  const prof = prof_array[0];
+  var prof = prof_array[0];
 
- 
+  // if (prof == undefined) {
+  //   prof = {
+  //     id: 0,
+  //     nickName: "user",
+  //     userProfile: 0,
+  //     created_on: "",
+  //     img: "",
+  //     download: [],
+  //   };
+  // }
+  
+
+  const favoriteIconFunc = async (e) => {
+    e.stopPropagation();
+    var packet = {
+      id: post.id,
+      main: post.main,
+      booktitle: post.booktitle,
+      author: post.author,
+      sub: post.sub,
+      current: post.good,
+      new: myprofile.id,
+    };
+    // console.log("click");
+    await fetchAsyncPatchLiked(packet);
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // const UpContextClose = useCallback(() => {
-  //   handleClose();
-  // }, [open]);
+  
 
   return (
     <div className="-mb-16">
-      <UpContext post={post} comment={comment} open={open} handleClose={handleClose} />
+      <UpContext
+        post={post}
+        key={post.id}
+        comments={comments}
+        open={open}
+        handleClose={handleClose}
+      />
       {/* <Link href={`/posts/${post.id}/`} passHref> */}
       <Card
         className={expanded ? "showContent test " : "hideContent test"}
@@ -113,19 +123,12 @@ export default function MessageCard({ post,comment }) {
           avatar={<ProfileIcon profile={prof} />}
           action={
             <div>
-              <IconButton
-                onClick={parentEventStopper}
-                aria-label="add to favorites"
-              >
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton onClick={parentEventStopper} aria-label="share">
-                <DownloadIcon />
-              </IconButton>
+              <FavoriteCheckBox post={post} />
+              <DownloadCheckBox post={post} />
             </div>
           }
-          title={prof.nickName}
-          subheader={timeDiffrence()}
+          title={prof? prof.nickName:"" }
+          subheader={dateFunction(post.created_on)}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">

@@ -5,9 +5,11 @@ import Button from "@mui/material/Button";
 import Layout from "../components/Layout";
 import Cookie from "universal-cookie";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 export default function Search() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [main, setMain] = useState("");
   const [booktitle, setBooktitle] = useState("");
@@ -32,7 +34,16 @@ export default function Search() {
       if (res.status === 401) {
         alert("JWT Token not valid");
       }
+      router.push("/");
+      return;
     });
+    const packet = {
+      main: main,
+      booktitle: booktitle,
+      author: author,
+      sub: sub,
+    }
+    await dispatch
     router.push("/");
   };
 

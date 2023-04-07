@@ -1,96 +1,56 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import { useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import DownloadIcon from "@mui/icons-material/Download";
-import { ProfileIcon, CommentBox, CommentField } from ".";
-import { useSelector, useDispatch } from "react-redux";
 import {
-  selectProfiles,
-  
-} from "../../src/reducks/auth/authSlice.js";
+  ProfileIcon,
+  CommentBox,
+  CommentField,
+  dateFunction,
+  FavoriteCheckBox,
+  DownloadCheckBox,
+} from ".";
+import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
 import {
-  postComment,
   getComments,
-  setComment,
-  selectComments,
+  fetchAsyncPatchLiked,
+  fetchPostStart,
+  fetchPostEnd,
 } from "src/reducks/post/postSlice";
-import useSWR from "swr";
+import { selectProfile, selectProfiles } from "src/reducks/auth/authSlice";
 
-export default function UpContext({ post,comment, open, handleClose, staticComments }) {
-  const dispatch = useDispatch();
-
-  const parentEventStopper = (e) => {
-    e.stopPropagation();
-  };
-
+export default function UpContext({ post, comments, open, handleClose }) {
   const defaultOptions = {
     shouldPreventDefault: true,
     delay: 200,
   };
 
-  const timeDiffrence = () => {
-    var diff = new Date() - new Date(post.created_on);
-    var mes_diff;
-    var min = parseInt(diff / 1000 / 60);
+  // const fetcher = (url) => fetch(url).then((res) => res.json());
+  // const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
 
-    if (min >= 60) {
-      var hour = parseInt(min / 60);
-      if (hour >= 24) {
-        var day = parseInt(hour / 24);
-        if (day <= 7) {
-          mes_diff = day + "日前";
-        } else if (day <= 31) {
-          var week = parseInt(day / 7);
-          mes_diff = week + "週間前";
-        } else if (day <= 365) {
-          var month = parseInt(day / 31);
-          mes_diff = month + "か月前";
-        } else {
-          var year = parseInt(day / 365);
-          mes_diff = year + "年前";
-        }
-      } else {
-        mes_diff = hour + "時間前";
-      }
-    } else {
-      if (min > 0) {
-        mes_diff = min + "分前";
-      } else {
-        mes_diff = "たった今";
-      }
-    }
-    return mes_diff;
-  };
-
-  const fetcher = (url) => fetch(url).then((res) => res.json());
-  const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
-
-  const { data: comments, mutate } = useSWR(apiUrl, fetcher, {
-    fallbackData: staticComments,
-  });
-
- 
-
+  // const { data: comments, mutate } = useSWR(apiUrl, fetcher, {
+  //   fallbackData: staticComments,
+  // });
 
   const profiles = useSelector(selectProfiles);
+  const myprofile = useSelector(selectProfile);
+
+  const checkCommentUser = (userCommentId) => {
+    let profile = profiles.filter((prof) => {
+      return prof.userProfile === userCommentId;
+    });
+    return profile[0];
+  };
 
   const prof_array = profiles.filter((prof) => {
     return prof.userProfile === post.userPost;
   });
   const prof = prof_array[0];
-
-
-
-  
 
   const descriptionElementRef = React.useRef(null);
   useEffect(() => {
@@ -101,6 +61,35 @@ export default function UpContext({ post,comment, open, handleClose, staticComme
       }
     }
   }, [open]);
+
+  const favoriteIconFunc = async () => {
+    //e.stopPropagation();
+    var packet = {
+      id: post.id,
+      main: post.main,
+      booktitle: post.booktitle,
+      author: post.author,
+      sub: post.sub,
+      current: post.good,
+      new: myprofile.id,
+    };
+
+    // const packet = {
+    //   ...post,
+    //   current: post.good,
+    //   new: myprofile.id,
+    // };
+    const goodInfo = { current: post.good, new: myprofile.id };
+
+    await dispatch(fetchPostStart());
+    //await dispatch(asyncPatchLiked(packet));
+    await dispatch(fetchAsyncPatchLiked(packet));
+    await dispatch(fetchPostEnd());
+  };
+
+  // useEffect(() => {
+  //   console.log(post.good);
+  // }, [post]);
 
   return (
     <div>
@@ -121,19 +110,13 @@ export default function UpContext({ post,comment, open, handleClose, staticComme
               avatar={<ProfileIcon profile={prof} />}
               action={
                 <div>
-                  <IconButton
-                    onClick={parentEventStopper}
-                    aria-label="add to favorites"
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton onClick={parentEventStopper} aria-label="share">
-                    <DownloadIcon />
-                  </IconButton>
+                  <FavoriteCheckBox post={post} />
+
+                  <DownloadCheckBox post={post} />
                 </div>
               }
-              title={prof.nickName}
-              subheader={timeDiffrence()}
+              title={prof ? prof.nickName : ""}
+              subheader={dateFunction(post.created_on)}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -166,9 +149,14 @@ export default function UpContext({ post,comment, open, handleClose, staticComme
               <CommentField postId={post.id} />
               {comments &&
                 comments.map((comment) => (
-                  <CommentBox profile = {null} key={comment.id} text={comment.text} />//
+                  <CommentBox
+                    comment={comment}
+                    profile={checkCommentUser(comment.userComment)}
+                    key={comment.id}
+                    text={comment.text}
+                    post={post}
+                  /> //
                 ))}
-                
             </CardContent>
           </Box>
         </Fade>

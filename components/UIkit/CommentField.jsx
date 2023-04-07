@@ -6,7 +6,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import { useState } from "react";
-import { postComment, getComments } from "src/reducks/post/postSlice";
+import {
+  postComment,
+  getComments,
+  selectProfiles,
+} from "src/reducks/post/postSlice";
 import { useSWRConfig } from "swr";
 
 const apiUrlComment = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
@@ -18,12 +22,10 @@ export default function CommentField({ profile = null, postId }) {
 
   const commentPost = async (e) => {
     e.preventDefault();
-    const packet = { text: text, post: 1 };
+    const packet = { text: text, post: postId };
     await postComment(packet);
     mutate(apiUrlComment);
     setText("");
-    console.log(e.target.value);
-    e.target.value = "";
   };
 
   const userProf = useSelector(selectProfile);
@@ -33,26 +35,30 @@ export default function CommentField({ profile = null, postId }) {
   }
 
   return (
-    <div className="flex mb-4">
-      <div className="flex items-center">
-        <ProfileIcon profile={profile} />
+    <div>
+      <div className="flex mb-1">
+        <div className="flex items-center">
+          <ProfileIcon profile={profile} />
+        </div>
+        <div className="w-full ml-2 ">
+          <Input
+            placeholder="コメントを追加"
+            multiline
+            className="w-full "
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="w-full ml-2 ">
-        <Input
-          placeholder="コメントを追加"
-          multiline
-          className="w-full "
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button
+      <div className=" flex justify-end mb-2">
+        <Button
           variant="contained"
-          type="submit"
-          className="mt-2 "
+          type="button"
           disabled={!text.length}
           onClick={commentPost}
         >
-          コメント
-        </button>
+          投稿
+        </Button>
       </div>
     </div>
   );

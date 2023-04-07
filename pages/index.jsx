@@ -8,6 +8,7 @@ import { setPost } from "../src/reducks/post/postSlice";
 import { useDispatch } from "react-redux";
 
 import { getComments, setComment } from "src/reducks/post/postSlice";
+import { fetchAsyncGetProfs } from "src/reducks/auth/authSlice";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -16,6 +17,9 @@ const apiUrlComment = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
 
 export default function Home({ staticfilteredPosts, staticComments }) {
   const dispatch = useDispatch();
+  const getProf = async () => {
+    await dispatch(fetchAsyncGetProfs());
+  }
 
   const { data: posts } = useSWR(apiUrl, fetcher, {
     fallbackData: staticfilteredPosts,
@@ -23,11 +27,6 @@ export default function Home({ staticfilteredPosts, staticComments }) {
   const filteredPosts = posts?.sort(
     (b, a) => new Date(a.created_on) - new Date(b.created_on)
   );
-
-  useEffect(() => {
-    const posts = { ...filteredPosts };
-    dispatch(setPost(posts));
-  }, []);
 
   const { data: comments } = useSWR(apiUrlComment, fetcher, {
     fallbackData: staticComments,
@@ -37,16 +36,27 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     (b, a) => new Date(a.created_on) - new Date(b.created_on)
   );
 
-  // useEffect(() => {
-  //   const comments = { ...filteredComment };
-  //   console.log("change comments");
-  //   dispatch(setComment(comments));
-  // }, []);
+
+  useEffect(() => {
+    const posts = [...filteredPosts];
+    const comments = [...filteredComment];
+    getProf()
+    dispatch((posts));
+    dispatch(setComment(comments));
+  }, []);
 
   return (
     <Layout title="Home">
       {filteredPosts &&
-        filteredPosts.map((post) => <MessageCard key={post.id} post={post} comment={filteredComment} />)}
+        filteredPosts.map((post) => (
+          <MessageCard
+            key={post.id}
+            post={post}
+            comments={filteredComment.filter((comment) => {
+              return post.id === comment.post;
+            })}
+          />
+        ))}
     </Layout>
   );
 }

@@ -28,14 +28,34 @@ export const fetchAsyncRegister = createAsyncThunk(
 export const fetchAsyncCreateProf = createAsyncThunk(
   "profile/post",
   async (nickName) => {
-    const res = await axios.post(`${apiUrl}api/profile/`, nickName, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/profile/`, nickName, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/profile/`, nickName, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          //Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    }
+
+    // const res = await axios.post(`${apiUrl}api/profile/`, nickName, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     //Authorization: `JWT ${localStorage.localJWT}`,
+    //   },
+    // });
+    // return res.data;
   }
 );
 
@@ -71,7 +91,7 @@ export const fetchAsyncGetMyProf = createAsyncThunk("profile/get", async () => {
 export const fetchAsyncGetProfs = createAsyncThunk("profiles/get", async () => {
   const res = await axios.get(`${apiUrl}api/profile/`, {
     headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
+      // Authorization: `JWT ${localStorage.localJWT}`,
     },
   });
   return res.data;
@@ -82,7 +102,8 @@ export const authSlice = createSlice({
   initialState: {
     openModal: false,
     isLoginTrueRegiFalse: true,
-    openProfile: false,
+    openProfileModal: false,
+    editState: false,
     isLoadingAuth: false,
     myprofile: {
       id: 0,
@@ -90,6 +111,7 @@ export const authSlice = createSlice({
       userProfile: 0,
       created_on: "",
       img: "",
+      download: [],
     },
     profiles: [
       {
@@ -98,6 +120,7 @@ export const authSlice = createSlice({
         userProfile: 0,
         created_on: "",
         img: "",
+        download: [],
       },
     ],
   },
@@ -124,12 +147,22 @@ export const authSlice = createSlice({
       state.isLoginTrueRegiFalse = !state.isLoginTrueRegiFalse;
     },
     setOpenProfile(state) {
-      state.openProfile = true;
+      state.openProfileModal = true;
     },
     resetOpenProfile(state) {
-      state.openProfile = false;
+      state.openProfileModal = false;
     },
+    setEditState(state) {
+      state.editState = true;
+    },
+    resetEditState(state) {
+      state.editState = false;
+    },
+    
     editNickname(state, action) {
+      state.myprofile.nickName = action.payload;
+    },
+    editImage(state, action) {
       state.myprofile.nickName = action.payload;
     },
   },
@@ -160,18 +193,23 @@ export const {
   fetchCredEnd,
   setOpenModal,
   resetOpenModal,
+  setEditState,
+  resetEditState,
   setIsLoginTrueRegiFalse,
   resetIsLoginTrueRegiFalse,
   changeIsLoginTrueRegiFalse,
   setOpenProfile,
   resetOpenProfile,
   editNickname,
+  editImage,
 } = authSlice.actions;
 
 export const selectIsLoadingAuth = (state) => state.auth.isLoadingAuth;
 export const selectOpenModal = (state) => state.auth.openModal;
-export const selectIsLoginTrueRegiFalse = (state) => state.auth.isLoginTrueRegiFalse;
-export const selectOpenProfile = (state) => state.auth.openProfile;
+export const selectIsLoginTrueRegiFalse = (state) =>
+  state.auth.isLoginTrueRegiFalse;
+export const selectOpenProfile = (state) => state.auth.openProfileModal;
+export const selectEditState = (state) => state.auth.editState;
 export const selectProfile = (state) => state.auth.myprofile;
 export const selectProfiles = (state) => state.auth.profiles;
 

@@ -4,17 +4,32 @@ import Cookie from "universal-cookie";
 
 const cookie = new Cookie();
 
-const apiUrlPost = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`;
+const apiUrlPost = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`;
 const apiUrlComment = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
+const apiUrlProfile = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/profile/`;
 
 export const fetchAsyncGetPosts = createAsyncThunk("post/get", async () => {
-  const res = await axios.get(apiUrlPost, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  console.log(res.data);
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(apiUrlPost, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(apiUrlPost, {
+      headers: {
+        //Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  }
+  // const res = await axios.get(apiUrlPost, {
+  //   headers: {
+  //     Authorization: `JWT ${localStorage.localJWT}`,
+  //   },
+  // });
+  // return res.data;
 });
 
 export const fetchAsyncNewPost = createAsyncThunk(
@@ -55,7 +70,10 @@ export const fetchAsyncPatchLiked = createAsyncThunk(
     if (!isOverlapped) {
       uploadData.append("good", String(good.new));
     } else if (currentGood.length === 1) {
-      uploadData.append("title", good.title);
+      uploadData.append("main", good.main);
+      uploadData.append("booktitle", good.booktitle);
+      uploadData.append("author", good.author);
+      uploadData.append("sub", good.sub);
       const res = await axios.put(`${apiUrlPost}${good.id}/`, uploadData, {
         headers: {
           "Content-Type": "application/json",
@@ -138,20 +156,19 @@ export const postSlice = createSlice({
     resetOpenNewPost(state) {
       state.openNewPost = false;
     },
-    setPost(state,action) {
+    setPost(state, action) {
       return {
         ...state,
         posts: action.payload,
       };
     },
-    setComment(state,action) {
+    setComment(state, action) {
       //let state = {...state}
       return {
         ...state,
         comments: action.payload,
       };
     },
-    
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAsyncGetPosts.fulfilled, (state, action) => {
@@ -205,48 +222,8 @@ export const selectComments = (state) => state.post.comments;
 
 export default postSlice.reducer;
 
-
-
-
-
-
-
-
-const getCircularReplacer = () => {
-	const seen = new WeakSet()
-	return (key, value) => {
-		if (typeof value === "object" && value !== null) {
-			if (seen.has(value)) {
-				return
-			}
-			seen.add(value)
-		}
-		return value
-	}
-}
-
-// export const postComment = async (packet) => {
-//   //e.preventDefault();
-//   await fetch(
-//     `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`,
-//     {
-//       method: "POST",
-//       body: JSON.stringify(packet, getCircularReplacer()),
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `JWT ${localStorage.localJWT}`, 
-//         //Authorization: `JWT ${cookie.get("access_token")}`,
-//       },
-//     }
-//   ).then((res) => {
-//     if (res.status === 401) {
-//       alert("JWT Token not valid");
-//     }
-//   });
-// };
-
-export const getComments = (
-  "comment/get",
+export const getComments =
+  ("comment/get",
   async () => {
     const res = await axios.get(apiUrlComment, {
       headers: {
@@ -255,18 +232,115 @@ export const getComments = (
     });
     const comment = res.data;
     return comment;
-  }
-);
+  });
 
-export const postComment = (
-  "comment/post",
+export const postComment =
+  ("comment/post",
   async (comment) => {
-   
     await axios.post(apiUrlComment, comment, {
       headers: {
         Authorization: `JWT ${localStorage.localJWT}`,
       },
-      
     });
+  });
+
+export const asyncPatchLiked = createAsyncThunk("post/patch", async (good) => {
+  const currentGood = good.current;
+  const renewGood = [];
+  const uploadData = new FormData();
+
+  let isOverlapped = false;
+  currentGood.forEach((current) => {
+    //　すでにいいねを押されている投稿はtrueになってappendされず配列から消える　押されていない新規投稿はfalseで追加していく
+    if (current === good.new) {
+      isOverlapped = true;
+    } else {
+      renewGood.push(current); //uploadData.append("good", String(current));
+    }
+  });
+
+  if (!isOverlapped) {
+    renewGood.push(good.new); //uploadData.append("good", String(good.new));
+  } else if (currentGood.length === 1) {
+    const post = {
+      id: good.id,
+      //userPost:good.userPost,
+      main: good.main,
+      booktitle: good.booktitle,
+      author: good.author,
+      sub: good.sub,
+      good: [],
+    };
+    const res = await axios.put(`${apiUrlPost}${good.id}/`, post, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  }
+
+  const post = {
+    id: good.id,
+    //userPost:good.userPost,
+    main: good.main,
+    booktitle: good.booktitle,
+    author: good.author,
+    sub: good.sub,
+    good: renewGood,
+  };
+  const res = await axios.patch(`${apiUrlPost}${good.id}/`, uploadData, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `JWT ${localStorage.localJWT}`,
+    },
+  });
+  return res.data;
+});
+
+export const fetchAsyncPatchDownload = createAsyncThunk(
+  "post/patch",
+  async (download) => {
+    const currentDownload = download.current;
+    const uploadData = new FormData();
+
+    let isOverlapped = false;
+    currentDownload.forEach((current) => {
+      //　すでにいいねを押されている投稿はtrueになってappendされず配列から消える　押されていない新規投稿はfalseで追加していく
+      if (current === download.new) {
+        isOverlapped = true;
+      } else {
+        uploadData.append("download", String(current));
+      }
+    });
+
+    if (!isOverlapped) {
+      uploadData.append("download", String(download.new));
+    } else if (currentDownload.length === 1) {
+      uploadData.append("nickName", download.nickName);
+      //uploadData.append("img", download.img);
+      const res = await axios.put(
+        `${apiUrlProfile}${download.id}/`,
+        uploadData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    }
+    const res = await axios.patch(
+      `${apiUrlProfile}${download.id}/`,
+      uploadData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      }
+    );
+    return res.data;
   }
 );

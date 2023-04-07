@@ -38,7 +38,7 @@ const persistConfig = {
   key: 'root', // Storageに保存されるキー名を指定する
   storage, // 保存先としてlocalStorageがここで設定される
   //whitelist: ['name'] // Stateは`name`のみStorageに保存する
-  //blacklist: ['auth'] // `name2`は保存しない
+  //blacklist: ['auth',] // `name2`は保存しない
 }
 
 // 永続化設定されたReducerとして定義

@@ -15,8 +15,9 @@ import {
   selectProfile,
   editNickname,
   resetOpenProfile,
+  setOpenProfile,
 } from "../../src/reducks/auth/authSlice.js";
-import { Auth, ProfileIcon } from ".";
+import { AuthModal, ProfileIcon, ProfileModal } from ".";
 import { resetOpenNewPost } from "src/reducks/post/postSlice.js";
 import { Modal } from "@mui/material";
 
@@ -39,6 +40,9 @@ export default function ProRegIcon() {
     dispatch(resetOpenNewPost());
     dispatch(setOpenModal());
   };
+  const openProfileModal = () => {
+    dispatch(setOpenProfile());
+  };
 
   return (
     <div>
@@ -60,14 +64,13 @@ export default function ProRegIcon() {
           >
             <Paper className="absolute top-14 right-1 w-44  min-w-max">
               <MenuList>
-                <Link href="/mypage" passHref>
-                  <MenuItem>
-                    <ListItemIcon>
-                      <AccountCircleOutlinedIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Profile</ListItemText>
-                  </MenuItem>
-                </Link>
+                <MenuItem onClick={openProfileModal}>
+                  <ListItemIcon>
+                    <AccountCircleOutlinedIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Profile</ListItemText>
+                </MenuItem>
+
                 <Divider />
                 <MenuItem onClick={logout}>
                   <ListItemIcon>
@@ -93,7 +96,8 @@ export default function ProRegIcon() {
           ログイン
         </Button>
       )}
-      <Auth></Auth>
+      <AuthModal />
+      <ProfileModal />
     </div>
   );
 }
