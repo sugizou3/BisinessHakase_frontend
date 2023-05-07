@@ -105,59 +105,35 @@ export default function UpContext({ post, comments, open, handleClose }) {
         }}
       >
         <Fade in={open}>
-          <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-3/5 bg-gray-200 p-8 rounded-2xl h-4/5 overflow-hidden overflow-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
+          <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 minWidth-Modal w-3/5 bg-gray-200 sm:p-8 p-4 rounded-2xl h-4/5 overflow-hidden overflow-scroll hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
             <CardHeader
-              avatar={<ProfileIcon profile={prof} />}
-              action={
-                <div>
-                  <FavoriteCheckBox post={post} />
-
-                  <DownloadCheckBox post={post} />
-                </div>
-              }
-              title={prof ? prof.nickName : ""}
-              subheader={dateFunction(post.created_on)}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {post.main}
-              </Typography>
-              <div className="float-right mt-2">
-                <Typography variant="body2" color="text.secondary">
-                  {post.booktitle}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {post.author}
-                </Typography>
-              </div>
-            </CardContent>
-            <CardContent className="mt-10">
-              <Typography paragraph>
-                {post.sub}
-                {[...new Array(1)]
-                  .map(
-                    () => `Cras mattis consectetur purus sit amet fermentum.
-    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-                  )
-                  .join("\n")}
-              </Typography>
-            </CardContent>
-            <CardContent className="mt-3">
-              <Typography paragraph>10件のコメント</Typography>
-              <CommentField postId={post.id} />
-              {comments &&
-                comments.map((comment) => (
-                  <CommentBox
-                    comment={comment}
-                    profile={checkCommentUser(comment.userComment)}
-                    key={comment.id}
-                    text={comment.text}
-                    post={post}
-                  /> //
-                ))}
-            </CardContent>
+          avatar={<ProfileIcon profile={prof} />}
+          action={
+            <div>
+              <FavoriteCheckBox post={post} />
+              <DownloadCheckBox post={post} />
+            </div>
+          }
+          title={prof? prof.nickName:"" }
+          subheader={dateFunction(post.created_on)}
+        />
+        <CardContent>
+          <Typography variant="h6"  sx={{ fontWeight: 'bold' ,letterSpacing: 2 }} className="whitespace-pre-wrap" >
+            {post.main}
+          </Typography>
+          <div className="float-right mt-2">
+            <Typography variant="body2" color="text.secondary" >
+              {post.booktitle}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {post.author}
+            </Typography>
+          </div>
+        </CardContent>
+        <CardContent className="mt-10">
+          <Typography lineHeight={1.7} paragraph className="whitespace-pre-wrap">    {post.sub}</Typography>
+          <div className=" w-full h-10"></div>
+        </CardContent>
           </Box>
         </Fade>
       </Modal>

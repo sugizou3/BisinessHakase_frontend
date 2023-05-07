@@ -1,7 +1,9 @@
 import * as React from "react";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -19,10 +21,17 @@ import {
   fetchAsyncGetMyProf,
   fetchAsyncGetProfs,
   fetchAsyncCreateProf,
+  isLoggedInOn,
 } from "../../src/reducks/auth/authSlice";
 
-export default function AuthModal() {
-  const openModal = useSelector(selectOpenModal);
+export default function AuthModal({ openLimitation = false }) {
+  var openModal = useSelector(selectOpenModal);
+  const openFunc = () => {
+    if (!openLimitation) {
+      dispatch(resetOpenModal());
+    }
+  };
+
   const isLoginTrueRegiFalse = useSelector(selectIsLoginTrueRegiFalse);
   const isLoadingAuth = useSelector(selectIsLoadingAuth);
   const dispatch = useDispatch();
@@ -31,13 +40,13 @@ export default function AuthModal() {
     <div>
       <Modal
         open={openModal}
-        onClose={async () => {
-          await dispatch(resetOpenModal());
+        onClose={() => {
+          openFunc();
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-96 bg-gray-200 p-8 rounded-2xl">
+        <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-96 minWidth-Modal  bg-gray-200 p-8 rounded-2xl">
           {isLoginTrueRegiFalse ? (
             <Formik
               initialErrors={{ email: "required" }}
@@ -50,6 +59,7 @@ export default function AuthModal() {
 
                   await dispatch(fetchAsyncGetMyProf());
                 }
+                dispatch(isLoggedInOn())
                 await dispatch(fetchCredEnd());
                 await dispatch(resetOpenModal());
               }}
@@ -123,14 +133,24 @@ export default function AuthModal() {
                       </Button>
                       <br />
                       <br />
-                      <span
-                        className="my-4 flex justify-center"
+                      <Link href="/" passHref>
+                        <Typography
+                          className="mb-2 flex justify-center"
+                          onClick={() => {
+                            dispatch(resetOpenModal());
+                          }}
+                        >
+                          Home
+                        </Typography>
+                      </Link>
+                      <Typography
+                        className="mb-4 flex justify-center"
                         onClick={async () => {
                           await dispatch(changeIsLoginTrueRegiFalse());
                         }}
                       >
                         You dont have a account ?
-                      </span>
+                      </Typography>
                     </div>
                   </form>
                 </div>
@@ -147,7 +167,7 @@ export default function AuthModal() {
                 if (fetchAsyncRegister.fulfilled.match(resultReg)) {
                   await dispatch(fetchAsyncLogin(values));
                   await dispatch(
-                    fetchAsyncCreateProf({ nickName: "anonymous" })
+                    fetchAsyncCreateProf({ nickName: "anonimous" })
                   );
                   await dispatch(fetchAsyncGetProfs());
                   await dispatch(fetchAsyncGetMyProf());
@@ -224,14 +244,22 @@ export default function AuthModal() {
                       </Button>
                       <br />
                       <br />
-                      <span
+                      <Typography
+                        className="mb-2 flex justify-center"
+                        onClick={() => {
+                          dispatch(resetOpenModal());
+                        }}
+                      >
+                        Home
+                      </Typography>
+                      <Typography
                         className="my-4 flex justify-center"
                         onClick={async () => {
                           await dispatch(changeIsLoginTrueRegiFalse());
                         }}
                       >
                         You already have a account ?
-                      </span>
+                      </Typography>
                     </div>
                   </form>
                 </div>

@@ -131,11 +131,11 @@ export default function MessageCard({ post, comments }) {
           subheader={dateFunction(post.created_on)}
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="h6"  sx={{ fontWeight: 'bold' ,letterSpacing: 2 }} className="whitespace-pre-wrap" >
             {post.main}
           </Typography>
           <div className="float-right mt-2">
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" >
               {post.booktitle}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -144,7 +144,7 @@ export default function MessageCard({ post, comments }) {
           </div>
         </CardContent>
         <CardContent className="mt-10">
-          <Typography paragraph>{post.sub}</Typography>
+          <Typography lineHeight={1.6} paragraph className="whitespace-pre-wrap">    {post.sub}</Typography>
           <div className=" w-full h-10"></div>
         </CardContent>
       </Card>

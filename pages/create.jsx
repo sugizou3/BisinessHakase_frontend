@@ -2,48 +2,83 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import "tailwindcss/tailwind.css";
 import Button from "@mui/material/Button";
+import { AuthModal, CheckJWT, HeadTag } from "../components/UIkit";
 import Layout from "../components/Layout";
 import Cookie from "universal-cookie";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAsyncNewPost,
+  fetchPostEnd,
+  fetchPostStart,
+} from "src/reducks/post/postSlice";
+import { useEffect } from "react";
+import {
+  fetchAsyncGetProfs,
+  resetMyprofile,
+  editNickname,
+  setOpenModal,
+  selectIsLoggedIn,
+} from "src/reducks/auth/authSlice";
 
 export default function Search() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [main, setMain] = useState("");
   const [booktitle, setBooktitle] = useState("");
   const [author, setAuthor] = useState("");
   const [sub, setSub] = useState("");
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      dispatch(setOpenModal());
+    }
+  }, []);
+
+  // const create = async (e) => {
+  //   e.preventDefault();
+  //   await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       main: main,
+  //       booktitle: booktitle,
+  //       author: author,
+  //       sub: sub,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `JWT ${localStorage.localJWT}`,
+  //     },
+  //   }).then((res) => {
+  //     if (res.status === 401) {
+  //       alert("JWT Token not valid");
+  //     }
+  //     router.push("/");
+  //     return;
+  //   });
+  //   // const packet = {
+  //   //   main: main,
+  //   //   booktitle: booktitle,
+  //   //   author: author,
+  //   //   sub: sub,
+  //   // }
+  //   // await dispatch
+  //   router.push("/");
+  // };
+
   const create = async (e) => {
     e.preventDefault();
-    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`, {
-      method: "POST",
-      body: JSON.stringify({
-        main: main,
-        booktitle: booktitle,
-        author: author,
-        sub: sub,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    }).then((res) => {
-      if (res.status === 401) {
-        alert("JWT Token not valid");
-      }
-      router.push("/");
-      return;
-    });
     const packet = {
       main: main,
       booktitle: booktitle,
       author: author,
       sub: sub,
-    }
-    await dispatch
+    };
+    await dispatch(fetchPostStart());
+    await dispatch(fetchAsyncNewPost(packet));
+    await dispatch(fetchPostEnd());
     router.push("/");
   };
 
@@ -61,8 +96,11 @@ export default function Search() {
   };
 
   return (
-    <Layout title="Search">
-      <div className="flex justify-center p-8 bg-stone-50 h-full">
+    <div>
+      <AuthModal openLimitation={true} />
+      <HeadTag title="Create" />
+      <CheckJWT />
+      <div className="flex justify-center p-8 bg-stone-50 h-screen">
         <div className="flex flex-col w-4/5 max-w-2xl">
           <TextField
             id="filled-multiline-flexible"
@@ -121,6 +159,6 @@ export default function Search() {
           </Button>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 }

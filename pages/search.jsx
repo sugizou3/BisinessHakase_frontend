@@ -1,6 +1,6 @@
 import "tailwindcss/tailwind.css";
 import Layout from "../components/Layout";
-import { MessageCard } from "../components/UIkit";
+import { MessageCard, HeadTag,CheckJWT } from "../components/UIkit";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,28 +8,41 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { getSearch } from "src/reducks/post/postSlice";
+import { useState } from "react";
+import Input from "@mui/material/Input";
+import {
+  setSearchText,
+  resetSearchText,
+  selectSearchText,
+} from "src/reducks/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 export default function Search() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [text, setText] = useState("");
+  const [post, setPost] = useState([]);
+  const dispatch = useDispatch();
+  const searchText = useSelector(selectSearchText);
+
+  useEffect(async () => {
+    var searchedPost = await getSearch(searchText);
+    setPost(searchedPost);
+  }, [searchText]);
+
+  const searchFunc = async (e) => {
+    e.preventDefault();
+    const main = text;
+    post = await getSearch(main);
+    setPost(post);
+    setText("");
+  };
 
   return (
-    <Layout title="Search">
-      <div>
-      </div>
-    </Layout>
+    <div>
+      <HeadTag title="search" />
+      <CheckJWT/>
+      {post && post.map((post) => <MessageCard key={post.id} post={post} />)}
+    </div>
   );
 }

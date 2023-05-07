@@ -43,8 +43,6 @@
     width: 33rem;
   }
 
-  
-
   .hidden-scrollbar {
     -ms-overflow-style: none; /* IE, Edge 対応 */
     scrollbar-width: none; /* Firefox 対応 */
@@ -67,12 +65,18 @@
     min-width: 80px;
   }
 
+
+
   .minWidth-rightContent {
     min-width: 320px;
   }
 
   .maxWidth-SearchComponent {
     max-width: 600px;
+  }
+
+  .minWidth-Modal {
+    min-width: 370px;
   }
 
   .showContent {
@@ -92,11 +96,11 @@
 
   .font-NotoSansJP {
     font-family: "Noto Sans JP", sans-serif;
-    font-weight: ;
+    /* font-weight: ; */
   }
   .font-Roboto {
     font-family: "Roboto", sans-serif;
-    font-weight: ;
+    /* font-weight: ; */
   }
 
   @media (max-width: 1279px) {
@@ -105,6 +109,27 @@
       flex-direction: column;
     }
   }
+
+  @media (max-width: 1024px) {
+    .lg_NoneDisplay {
+      /* width: 0px; */
+      display: none;
+    }
+  }
+  @media (min-width: 645px) {
+    .sm_NoneDisplay {
+      /* width: 0px; */
+      display: none !important;
+    }
+  }
+  @media (max-width: 645px) {
+    .sm_max_NoneDisplay {
+      /* width: 0px; */
+      display: none !important;
+    }
+  }
+
+  
 
   .chipBar {
     -webkit-transform: translateY(0);

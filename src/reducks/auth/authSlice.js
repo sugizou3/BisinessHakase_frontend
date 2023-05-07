@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 const apiUrl = process.env.NEXT_PUBLIC_RESTAPI_URL;
 
@@ -7,6 +8,33 @@ export const fetchAsyncLogin = createAsyncThunk("auth/post", async (authen) => {
   const res = await axios.post(`${apiUrl}api/auth/jwt/create`, authen, {
     headers: {
       "Content-Type": "application/json",
+    },
+  });
+
+  return res.data;
+});
+
+export const fetchAsynkVerify = createAsyncThunk("verify/post", async () => {
+  const body = {
+    token: localStorage.localJWT,
+  };
+  const res = await axios.post(`${apiUrl}api/auth/jwt/verify`, body, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  //return res.data;
+});
+
+export const fetchAsynkRefresh = createAsyncThunk("refresh/post", async () => {
+  const body = {
+    refresh: localStorage.localJWT_refresh,
+  };
+  const res = await axios.post(`${apiUrl}api/auth/jwt/refresh`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
   });
 
@@ -105,6 +133,9 @@ export const authSlice = createSlice({
     openProfileModal: false,
     editState: false,
     isLoadingAuth: false,
+    searchText: "",
+    verifyStates: false,
+    isLoggedIn: true,
     myprofile: {
       id: 0,
       nickName: "",
@@ -143,6 +174,12 @@ export const authSlice = createSlice({
     resetIsLoginTrueRegiFalse(state) {
       state.isLoginTrueRegiFalse = false;
     },
+    isLoggedInOn(state) {
+      state.isLoggedIn = true;
+    },
+    isLoggedInOff(state) {
+      state.isLoggedIn = false;
+    },
     changeIsLoginTrueRegiFalse(state) {
       state.isLoginTrueRegiFalse = !state.isLoginTrueRegiFalse;
     },
@@ -158,18 +195,56 @@ export const authSlice = createSlice({
     resetEditState(state) {
       state.editState = false;
     },
-    
+
     editNickname(state, action) {
       state.myprofile.nickName = action.payload;
     },
     editImage(state, action) {
-      state.myprofile.nickName = action.payload;
+      state.myprofile.img = action.payload;
+    },
+    setSearchText(state, action) {
+      state.searchText = action.payload;
+    },
+    resetSearchText(state) {
+      state.searchText = "";
+    },
+
+    resetMyprofile(state) {
+      state.myprofile.id = 0;
+      state.myprofile.nickName = "";
+      state.myprofile.userProfile = 0;
+      state.myprofile.created_on = "";
+      state.myprofile.img = "";
+      state.myprofile.download = [];
+      state.isLoggedIn = false;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAsyncLogin.fulfilled, (state, action) => {
       localStorage.setItem("localJWT", action.payload.access);
+      localStorage.setItem("localJWT_refresh", action.payload.refresh);
     });
+    builder.addCase(fetchAsynkVerify.fulfilled, (state, action) => {
+      state.verifyStates = true;
+    });
+    builder.addCase(fetchAsynkVerify.rejected, (state, action) => {
+      state.verifyStates = false;
+    });
+
+    builder.addCase(fetchAsynkRefresh.fulfilled, (state, action) => {
+      localStorage.setItem("localJWT", action.payload.access);
+      localStorage.setItem("localJWT_refresh", action.payload.refresh);
+    });
+    builder.addCase(fetchAsynkRefresh.rejected, (state, action) => {
+      state.myprofile.id = 0;
+      state.myprofile.nickName = "";
+      state.myprofile.userProfile = 0;
+      state.myprofile.created_on = "";
+      state.myprofile.img = "";
+      state.myprofile.download = [];
+      state.isLoggedIn = false;
+    });
+
     builder.addCase(fetchAsyncCreateProf.fulfilled, (state, action) => {
       state.myprofile = action.payload;
     });
@@ -197,20 +272,28 @@ export const {
   resetEditState,
   setIsLoginTrueRegiFalse,
   resetIsLoginTrueRegiFalse,
+  isLoggedInOn,
+  isLoggedInOff,
   changeIsLoginTrueRegiFalse,
   setOpenProfile,
   resetOpenProfile,
   editNickname,
   editImage,
+  setSearchText,
+  resetSearchText,
+  resetMyprofile,
 } = authSlice.actions;
 
 export const selectIsLoadingAuth = (state) => state.auth.isLoadingAuth;
 export const selectOpenModal = (state) => state.auth.openModal;
 export const selectIsLoginTrueRegiFalse = (state) =>
   state.auth.isLoginTrueRegiFalse;
+export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
+export const selectVerifyState = (state) => state.auth.verifyStates;
 export const selectOpenProfile = (state) => state.auth.openProfileModal;
 export const selectEditState = (state) => state.auth.editState;
 export const selectProfile = (state) => state.auth.myprofile;
 export const selectProfiles = (state) => state.auth.profiles;
+export const selectSearchText = (state) => state.auth.searchText;
 
 export default authSlice.reducer;

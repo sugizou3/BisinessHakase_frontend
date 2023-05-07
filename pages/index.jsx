@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import Layout from "../components/Layout";
-import { MessageCard } from "../components/UIkit";
+import { MessageCard,CheckJWT,HeadTag } from "../components/UIkit";
 import { getAllPostsData } from "../lib/posts";
 import useSWR from "swr";
 import { setPost } from "../src/reducks/post/postSlice";
 import { useDispatch } from "react-redux";
 
 import { getComments, setComment } from "src/reducks/post/postSlice";
-import { fetchAsyncGetProfs } from "src/reducks/auth/authSlice";
+import { fetchAsyncGetProfs,resetMyprofile,editNickname } from "src/reducks/auth/authSlice";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -41,12 +41,24 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     const posts = [...filteredPosts];
     const comments = [...filteredComment];
     getProf()
-    dispatch((posts));
+    dispatch(setPost(posts));
     dispatch(setComment(comments));
   }, []);
 
+  
+
+  // useEffect(() => {
+  //   var existJWT = checkJWT();
+  //   if (existJWT) {
+  // } else {
+  //   dispatch(resetMyprofile())
+  // }
+  // }, []);
+
   return (
-    <Layout title="Home">
+    <div>
+      <HeadTag title="Home"/>
+      <CheckJWT/>
       {filteredPosts &&
         filteredPosts.map((post) => (
           <MessageCard
@@ -57,7 +69,7 @@ export default function Home({ staticfilteredPosts, staticComments }) {
             })}
           />
         ))}
-    </Layout>
+    </div>
   );
 }
 

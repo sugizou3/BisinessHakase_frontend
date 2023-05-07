@@ -44,13 +44,13 @@ const RotationSettings = muiStyled((props) => {
 }));
 
 export default function ProfileModal() {
-  const openModal = useSelector(selectOpenProfile);
+  var openModal = useSelector(selectOpenProfile);
   const dispatch = useDispatch();
   const myprofile = useSelector(selectProfile);
   const editState = useSelector(selectEditState);
 
   const [image, setImage] = useState(myprofile ? myprofile.img : null);
-  const [name, setName] = useState(myprofile.nickName);
+  const [name, setName] = useState(myprofile ? myprofile.nickName : null);
   const [update, setUpdata] = useState(false);
 
   const upDateProfile = async (e) => {
@@ -150,7 +150,7 @@ export default function ProfileModal() {
           ) : (
             <div className="flex flex-col items-center mt-5">
               <ProfileIcon scale={120} />
-              <div className="m-3">{myprofile.nickName}</div>
+              <div className="m-3">{myprofile ? myprofile.nickName : null}</div>
             </div>
           )}
         </Box>

@@ -7,6 +7,7 @@ const cookie = new Cookie();
 const apiUrlPost = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`;
 const apiUrlComment = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
 const apiUrlProfile = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/profile/`;
+const apiUrlSearch = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/search/`;
 
 export const fetchAsyncGetPosts = createAsyncThunk("post/get", async () => {
   if (localStorage.localJWT) {
@@ -242,6 +243,18 @@ export const postComment =
         Authorization: `JWT ${localStorage.localJWT}`,
       },
     });
+  });
+
+  export const getSearch =
+  ("search/get",
+  async (main) => {
+    const res = await axios.get(`${apiUrlSearch}?main=${main}`, {
+      headers: {
+        //Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    const result = res.data;
+    return result;
   });
 
 export const asyncPatchLiked = createAsyncThunk("post/patch", async (good) => {

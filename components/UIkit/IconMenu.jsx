@@ -7,54 +7,45 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import HomeIcon from "@mui/icons-material/Home";
 import Link from "next/link";
+import Typography from '@mui/material/Typography';
 
 export default function IconMenu() {
   return (
     <Paper className="xl:w-80 max-w-full w-24 ">
       <MenuList>
         <Link href="/" passHref>
-          <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
+          <div className="   axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
             <div className="text-center ">
               <HomeIcon color="action" className=" mx-4 mb-1 " />
             </div>
-            <div className="text-center text-sm">ホーム</div>
+            <Typography className="text-center " gutterBottom>ホーム</Typography>
           </div>
         </Link>
-        <Link href="search/" passHref>
-          <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
+        <Link href="/search" passHref>
+          <div className="  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
             <div className="text-center ">
               <SearchIcon color="action" className="mx-4 mb-1 " />
             </div>
 
-            <div className="text-center text-sm">検索</div>
+            <Typography className="text-center " gutterBottom>検索</Typography>
           </div>
         </Link>
-        <Link href="create/" passHref>
-          <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
+        <Link href="/create" passHref>
+          <div className="  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
             <div className="text-center ">
               <BorderColorIcon color="action" className="mx-4 mb-1 " />
             </div>
 
-            <div className="text-center text-sm">作成</div>
+            <Typography className="text-center " gutterBottom>作成</Typography>
           </div>
         </Link>
-        <Link href="mypage/" passHref>
-          <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
+        <Link href="/mypage" passHref>
+          <div className="  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
             <div className="text-center ">
               <MenuBookIcon color="action" className="mx-4 mb-1 " />
             </div>
 
-            <div className="text-center text-sm">マイページ</div>
-          </div>
-        </Link>
-        <Divider className=" " />
-        <Link href="test/" passHref>
-          <div className=" font-NotoSansJP  axisXCenterBreakpoint  h-16 hover:bg-stone-100 flex xl:h-12  xl:items-center ">
-            <div className="text-center ">
-              <SearchIcon color="action" className="mx-4 mb-1 " />
-            </div>
-
-            <div className="text-center text-sm">テスト</div>
+            <Typography className="text-center " gutterBottom>マイページ</Typography>
           </div>
         </Link>
       </MenuList>

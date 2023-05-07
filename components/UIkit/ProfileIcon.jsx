@@ -42,10 +42,10 @@ export default function ProfileIcon({ scale, profile = null, image = null }) {
 
   return (
     <div>
-      {img != null || profile.nickName == "anonymous" ? (
+      { img || profile.nickName == "anonimous"  ? (
         <Avatar
           alt="Who?"
-          src={profile.img}
+          src={img}
           sx={{ width: scale, height: scale }}
         />
       ) : (

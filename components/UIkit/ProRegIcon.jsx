@@ -16,6 +16,7 @@ import {
   editNickname,
   resetOpenProfile,
   setOpenProfile,
+  resetMyprofile,
 } from "../../src/reducks/auth/authSlice.js";
 import { AuthModal, ProfileIcon, ProfileModal } from ".";
 import { resetOpenNewPost } from "src/reducks/post/postSlice.js";
@@ -35,7 +36,7 @@ export default function ProRegIcon() {
 
   const logout = () => {
     localStorage.removeItem("localJWT");
-    dispatch(editNickname(""));
+    dispatch(resetMyprofile());
     dispatch(resetOpenProfile());
     dispatch(resetOpenNewPost());
     dispatch(setOpenModal());
@@ -96,7 +97,7 @@ export default function ProRegIcon() {
           ログイン
         </Button>
       )}
-      <AuthModal />
+      <AuthModal/>
       <ProfileModal />
     </div>
   );
