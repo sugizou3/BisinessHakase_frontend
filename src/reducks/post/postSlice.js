@@ -75,6 +75,7 @@ export const fetchAsyncPatchLiked = createAsyncThunk(
       uploadData.append("booktitle", good.booktitle);
       uploadData.append("author", good.author);
       uploadData.append("sub", good.sub);
+      uploadData.append("word", good.word);
       const res = await axios.put(`${apiUrlPost}${good.id}/`, uploadData, {
         headers: {
           "Content-Type": "application/json",
