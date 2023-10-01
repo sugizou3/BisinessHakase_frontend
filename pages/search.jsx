@@ -15,6 +15,7 @@ import {
   setSearchText,
   resetSearchText,
   selectSearchText,
+  selectProfile,
 } from "src/reducks/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -24,10 +25,15 @@ export default function Search() {
   const [post, setPost] = useState([]);
   const dispatch = useDispatch();
   const searchText = useSelector(selectSearchText);
+  const myprofile = useSelector(selectProfile);
+  var userId = myprofile? myprofile.id : -1;
 
   useEffect(async () => {
-    var searchedPost = await getSearch(searchText);
-    setPost(searchedPost);
+    var searchedPost = await getSearch(searchText,userId);
+    const posts = searchedPost?.sort(
+      (b, a) => new Date(a.created_on) - new Date(b.created_on)
+    );
+    setPost(posts);
   }, [searchText]);
 
   const searchFunc = async (e) => {

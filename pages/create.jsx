@@ -30,6 +30,7 @@ export default function Search() {
   const [booktitle, setBooktitle] = useState("");
   const [author, setAuthor] = useState("");
   const [sub, setSub] = useState("");
+  const [word, setWord] = useState("");
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -75,9 +76,14 @@ export default function Search() {
       booktitle: booktitle,
       author: author,
       sub: sub,
+      word: word,
     };
     await dispatch(fetchPostStart());
-    await dispatch(fetchAsyncNewPost(packet));
+    // await dispatch(fetchAsyncNewPost(packet));
+    var result = await dispatch(fetchAsyncNewPost(packet));
+    setWord(result)
+    console.log(result);
+    console.log("tetetet")
     await dispatch(fetchPostEnd());
     router.push("/");
   };

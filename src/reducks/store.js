@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 import authReducer from "./auth/authSlice";
 import postReducer from "./post/postSlice";
+import dictionaryReducer from "./dictionary/dictionarySlice";
 
 
 
@@ -30,6 +31,7 @@ import postReducer from "./post/postSlice";
 const reducers = combineReducers({
     auth: authReducer,
     post: postReducer,
+    dictionary:dictionaryReducer,
  });
  
 
@@ -38,7 +40,7 @@ const persistConfig = {
   key: 'root', // Storageに保存されるキー名を指定する
   storage, // 保存先としてlocalStorageがここで設定される
   //whitelist: ['name'] // Stateは`name`のみStorageに保存する
-  blacklist: ['post'] // `name2`は保存しない
+  blacklist: ['post','post'] // `name2`は保存しない
 }
 
 // 永続化設定されたReducerとして定義

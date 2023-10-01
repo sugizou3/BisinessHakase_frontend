@@ -125,6 +125,18 @@ export const fetchAsyncGetProfs = createAsyncThunk("profiles/get", async () => {
   return res.data;
 });
 
+export const fetchAsyncGetDictionary = createAsyncThunk(
+  "dictionary/get",
+  async () => {
+    const res = await axios.get(`${apiUrl}api/list-dictionary/`, {
+      headers: {
+        // Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {

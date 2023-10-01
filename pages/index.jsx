@@ -1,14 +1,24 @@
 import { useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import Layout from "../components/Layout";
-import { MessageCard,CheckJWT,HeadTag } from "../components/UIkit";
+import { MessageCard, CheckJWT, HeadTag } from "../components/UIkit";
 import { getAllPostsData } from "../lib/posts";
 import useSWR from "swr";
 import { setPost } from "../src/reducks/post/postSlice";
 import { useDispatch } from "react-redux";
 
 import { getComments, setComment } from "src/reducks/post/postSlice";
-import { fetchAsyncGetProfs,resetMyprofile,editNickname } from "src/reducks/auth/authSlice";
+import {
+  fetchAsyncGetProfs,
+  resetMyprofile,
+  editNickname,
+  // selectDictionary,
+  // fetchAsyncGetDictionary,
+} from "src/reducks/auth/authSlice";
+import {
+  selectDictionary,
+  fetchAsyncGetDictionary,
+} from "src/reducks/dictionary/dictionarySlice";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -19,7 +29,8 @@ export default function Home({ staticfilteredPosts, staticComments }) {
   const dispatch = useDispatch();
   const getProf = async () => {
     await dispatch(fetchAsyncGetProfs());
-  }
+    await dispatch(fetchAsyncGetDictionary());
+  };
 
   const { data: posts } = useSWR(apiUrl, fetcher, {
     fallbackData: staticfilteredPosts,
@@ -36,16 +47,14 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     (b, a) => new Date(a.created_on) - new Date(b.created_on)
   );
 
-
   useEffect(() => {
     const posts = [...filteredPosts];
     const comments = [...filteredComment];
-    getProf()
+    getProf();
     dispatch(setPost(posts));
     dispatch(setComment(comments));
   }, []);
-
-  
+  // console.log(comments);
 
   // useEffect(() => {
   //   var existJWT = checkJWT();
@@ -57,8 +66,8 @@ export default function Home({ staticfilteredPosts, staticComments }) {
 
   return (
     <div>
-      <HeadTag title="Home"/>
-      <CheckJWT/>
+      <HeadTag title="Home" />
+      <CheckJWT />
       {filteredPosts &&
         filteredPosts.map((post) => (
           <MessageCard

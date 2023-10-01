@@ -21,3 +21,4 @@ export { default as NameWithIcon } from "./NameWithIcon.jsx";
 export { default as CheckJWT } from "./CheckJWT.jsx";
 export { default as RightContent } from "./RightContent.jsx";
 export { default as HeadTag } from "./HeadTag.jsx";
+export { default as SearchWordBox } from "./SearchWordBox.jsx";

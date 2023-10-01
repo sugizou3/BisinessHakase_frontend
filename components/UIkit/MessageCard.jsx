@@ -22,7 +22,10 @@ import {
   selectProfile,
   fetchAsyncGetProfs,
 } from "../../src/reducks/auth/authSlice.js";
-import { fetchAsyncPatchLiked } from "src/reducks/post/postSlice";
+import {
+  selectDictionary,
+} from "../../src/reducks/dictionary/dictionarySlice";
+import { fetchAsyncPatchLiked, } from "src/reducks/post/postSlice";
 
 const ExpandMore = muiStyled((props) => {
   const { expand, ...other } = props;
@@ -67,6 +70,7 @@ export default function MessageCard({ post, comments }) {
 
   const profiles = useSelector(selectProfiles);
   const myprofile = useSelector(selectProfile);
+  const dictionary = useSelector(selectDictionary);
 
   const prof_array = profiles.filter((prof) => {
     return prof.userProfile === post.userPost;

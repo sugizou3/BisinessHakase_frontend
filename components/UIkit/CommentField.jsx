@@ -40,7 +40,7 @@ export default function CommentField({ profile = null, postId }) {
         <div className="flex items-center">
           <ProfileIcon profile={profile} />
         </div>
-        <div className="w-full ml-2 ">
+        <div className="w-full ml-3 ">
           <Input
             placeholder="コメントを追加"
             multiline

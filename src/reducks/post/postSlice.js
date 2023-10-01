@@ -41,6 +41,11 @@ export const fetchAsyncNewPost = createAsyncThunk(
     uploadData.append("booktitle", newPost.booktitle);
     uploadData.append("author", newPost.author);
     uploadData.append("sub", newPost.sub);
+    if (newPost.word.length > 0) {
+      newPost.word.forEach((word, index) => {
+        uploadData.append("word", word);
+      });
+    }
 
     const res = await axios.post(apiUrlPost, uploadData, {
       headers: {
@@ -246,10 +251,10 @@ export const postComment =
     });
   });
 
-  export const getSearch =
+export const getSearch =
   ("search/get",
-  async (main) => {
-    const res = await axios.get(`${apiUrlSearch}?main=${main}`, {
+  async (main,userId) => {
+    const res = await axios.get(`${apiUrlSearch}?main=${main}&userId=${userId}`, {
       headers: {
         //Authorization: `JWT ${localStorage.localJWT}`,
       },

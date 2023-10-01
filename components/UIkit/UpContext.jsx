@@ -12,6 +12,7 @@ import {
   dateFunction,
   FavoriteCheckBox,
   DownloadCheckBox,
+  SearchWordBox,
 } from ".";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "@mui/material/Backdrop";
@@ -23,6 +24,7 @@ import {
   fetchPostEnd,
 } from "src/reducks/post/postSlice";
 import { selectProfile, selectProfiles } from "src/reducks/auth/authSlice";
+import { comment } from "postcss";
 
 export default function UpContext({ post, comments, open, handleClose }) {
   const defaultOptions = {
@@ -134,6 +136,14 @@ export default function UpContext({ post, comments, open, handleClose }) {
           <Typography lineHeight={1.7} paragraph className="whitespace-pre-wrap">    {post.sub}</Typography>
           <div className=" w-full h-10"></div>
         </CardContent>
+        <SearchWordBox postWords={post.word}/>
+        <CommentField postId={post.id}/>
+        {comments &&
+        comments.map((comment) => (
+          <CommentBox comment={comment}/>
+        ))}
+        {/* <CommentBox comment={comments}/> */}
+        
           </Box>
         </Fade>
       </Modal>
@@ -141,7 +151,3 @@ export default function UpContext({ post, comments, open, handleClose }) {
   );
 }
 
-export async function getStaticProps() {
-  const staticComments = await getComments();
-  return { props: { staticComments }, revalidate: 3 };
-}
