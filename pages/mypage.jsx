@@ -1,7 +1,7 @@
 import "tailwindcss/tailwind.css";
 import Layout from "../components/Layout";
 // import TabPanel from "@mui/material/TabPanel";
-import { MessageCard, TabGroup,NameWithIcon,AuthModal,CheckJWT,HeadTag } from "../components/UIkit";
+import { MessageCard, TabGroup,NameWithIcon,AuthModal,CheckJWT,HeadTag,ProfileModal } from "../components/UIkit";
 import { useEffect,useState } from "react";
 import "tailwindcss/tailwind.css";
 import { getAllPostsData } from "../lib/posts";
@@ -10,6 +10,7 @@ import { setPost } from "../src/reducks/post/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getComments, setComment } from "src/reducks/post/postSlice";
 import { fetchAsyncGetProfs ,resetMyprofile,setOpenModal,selectIsLoggedIn} from "src/reducks/auth/authSlice";
+
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -62,7 +63,7 @@ export default function Mypage({ staticfilteredPosts, staticComments }) {
     <div >
       <HeadTag title="Mypage"/>
       <CheckJWT/>
-      <AuthModal openLimitation={true}/>
+      <AuthModal openLimitation={true}/>            
       <NameWithIcon/>
       <TabGroup />
     </div>

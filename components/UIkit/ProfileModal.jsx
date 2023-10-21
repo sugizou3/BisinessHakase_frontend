@@ -10,23 +10,12 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { TextField, CircularProgress, IconButton } from "@mui/material";
 import {
-  selectIsLoadingAuth,
-  setOpenProfile,
   resetOpenProfile,
-  selectIsLoginTrueRegiFalse,
-  resetOpenModal,
-  changeIsLoginTrueRegiFalse,
   fetchCredStart,
   fetchCredEnd,
-  fetchAsyncLogin,
-  fetchAsyncRegister,
-  fetchAsyncGetMyProf,
-  fetchAsyncGetProfs,
-  fetchAsyncCreateProf,
   selectEditState,
   setEditState,
   resetEditState,
-  editNickname,
   selectOpenProfile,
   selectProfile,
   fetchAsyncUpdateProf,

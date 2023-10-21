@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import authReducer from "./auth/authSlice";
 import postReducer from "./post/postSlice";
 import dictionaryReducer from "./dictionary/dictionarySlice";
+import searchInfoReducer from "./searchInfo/searchInfoSlice";
 
 
 
@@ -32,6 +33,7 @@ const reducers = combineReducers({
     auth: authReducer,
     post: postReducer,
     dictionary:dictionaryReducer,
+    searchInfo:searchInfoReducer,
  });
  
 
@@ -40,7 +42,7 @@ const persistConfig = {
   key: 'root', // Storageに保存されるキー名を指定する
   storage, // 保存先としてlocalStorageがここで設定される
   //whitelist: ['name'] // Stateは`name`のみStorageに保存する
-  blacklist: ['post','post'] // `name2`は保存しない
+  blacklist: ['post','searchInfo'] // `name2`は保存しない
 }
 
 // 永続化設定されたReducerとして定義

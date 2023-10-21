@@ -8,6 +8,7 @@ const apiUrlPost = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`;
 const apiUrlComment = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/comment/`;
 const apiUrlProfile = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/profile/`;
 const apiUrlSearch = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/search/`;
+const apiUrlTextToId = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/textToId/`;
 
 export const fetchAsyncGetPosts = createAsyncThunk("post/get", async () => {
   if (localStorage.localJWT) {
@@ -56,6 +57,34 @@ export const fetchAsyncNewPost = createAsyncThunk(
     return res.data;
   }
 );
+
+export const fetchAsyncUpdatePost = createAsyncThunk(
+  "post/put",
+  async (post) => {
+    const uploadData = new FormData();
+    uploadData.append("main", post.main);
+    uploadData.append("booktitle", post.booktitle);
+    uploadData.append("author", post.author);
+    uploadData.append("sub", post.sub);
+    if (post.word.length > 0) {
+      post.word.forEach((word, index) => {
+        uploadData.append("word", word);
+      });
+    }
+    const res = await axios.put(
+      `${apiUrlPost}${post.id}/`,
+      uploadData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      }
+    );
+    return res.data;
+  }
+);
+
 
 export const fetchAsyncPatchLiked = createAsyncThunk(
   "post/patch",
@@ -128,6 +157,7 @@ export const postSlice = createSlice({
   initialState: {
     isLoadingPost: false,
     openNewPost: false,
+    editState: false,
     posts: [
       {
         id: 0,
@@ -138,6 +168,7 @@ export const postSlice = createSlice({
         userPost: 0,
         created_on: "",
         good: [0],
+        
       },
     ],
     comments: [
@@ -169,6 +200,12 @@ export const postSlice = createSlice({
         posts: action.payload,
       };
     },
+    setPostEditState(state) {
+      state.editState = true;
+    },
+    resetPostEditState(state) {
+      state.editState = false;
+    },
     setComment(state, action) {
       //let state = {...state}
       return {
@@ -185,6 +222,12 @@ export const postSlice = createSlice({
       };
     });
     builder.addCase(fetchAsyncNewPost.fulfilled, (state, action) => {
+      return {
+        ...state,
+        posts: [...state.posts, action.payload],
+      };
+    });
+    builder.addCase(fetchAsyncUpdatePost.fulfilled, (state, action) => {
       return {
         ...state,
         posts: [...state.posts, action.payload],
@@ -220,12 +263,15 @@ export const {
   resetOpenNewPost,
   setPost,
   setComment,
+  setPostEditState,
+  resetPostEditState,
 } = postSlice.actions;
 
 export const selectIsLoadingPost = (state) => state.post.isLoadingPost;
 export const selectOpenNewPost = (state) => state.post.openNewPost;
 export const selectPosts = (state) => state.post.posts;
 export const selectComments = (state) => state.post.comments;
+export const selectPostEditState = (state) => state.post.editState;
 
 export default postSlice.reducer;
 
@@ -257,6 +303,18 @@ export const getSearch =
     const res = await axios.get(`${apiUrlSearch}?main=${main}&userId=${userId}`, {
       headers: {
         //Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    const result = res.data;
+    return result;
+  });
+
+  export const textToId =
+  ("textToId/post",
+  async (word) => {
+    const res = await axios.post(`${apiUrlTextToId}`,{word:word}, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
       },
     });
     const result = res.data;

@@ -81,9 +81,9 @@ export default function Search() {
     await dispatch(fetchPostStart());
     // await dispatch(fetchAsyncNewPost(packet));
     var result = await dispatch(fetchAsyncNewPost(packet));
-    setWord(result)
-    console.log(result);
-    console.log("tetetet")
+    // setWord(result)
+    // console.log(result);
+    // console.log("tetetet")
     await dispatch(fetchPostEnd());
     router.push("/");
   };
@@ -157,7 +157,7 @@ export default function Search() {
           <div className="h-14" />
 
           <Button
-            variant="outlined"
+            variant="contained"
             className=" w-24 self-center"
             onClick={create}
           >

@@ -85,6 +85,10 @@
     transition: all 0.5s cubic-bezier(1, 0, 1, 0);
   }
 
+  .minWidth-InputTag {
+    min-width: 20px;
+  }
+
   .gradientWhite {
     background: linear-gradient(
       rgba(255, 255, 255, 0),
@@ -127,6 +131,11 @@
       /* width: 0px; */
       display: none !important;
     }
+  }
+
+  .visible_hover:hover {
+    visibility: visible;
+    background-color: aqua;
   }
 
   

@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadIcon from "@mui/icons-material/Download";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {
   ProfileIcon,
   useLongPress,
@@ -19,13 +20,15 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectProfiles,
-  selectProfile,
   fetchAsyncGetProfs,
+  selectProfile,
 } from "../../src/reducks/auth/authSlice.js";
 import {
-  selectDictionary,
-} from "../../src/reducks/dictionary/dictionarySlice";
-import { fetchAsyncPatchLiked, } from "src/reducks/post/postSlice";
+  fetchAsyncPatchLiked,
+  selectPostEditState,
+  setPostEditState,
+  resetPostEditState,
+} from "src/reducks/post/postSlice";
 
 const ExpandMore = muiStyled((props) => {
   const { expand, ...other } = props;
@@ -38,12 +41,24 @@ const ExpandMore = muiStyled((props) => {
   }),
 }));
 
+const RotationSettings = muiStyled((props) => {
+  const { ...other } = props;
+  return <IconButton {...other} />;
+})(({ editState, theme }) => ({
+  transform: !editState ? "rotate(0deg)" : "rotate(180deg)",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
 export default function MessageCard({ post, comments }) {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
-  
+  const editState = useSelector(selectPostEditState);
 
-
+  const handleEditClick = async () => {
+      await dispatch(setPostEditState());
+  };
 
   useEffect(() => {
     async () => {
@@ -70,24 +85,11 @@ export default function MessageCard({ post, comments }) {
 
   const profiles = useSelector(selectProfiles);
   const myprofile = useSelector(selectProfile);
-  const dictionary = useSelector(selectDictionary);
 
   const prof_array = profiles.filter((prof) => {
     return prof.userProfile === post.userPost;
   });
   var prof = prof_array[0];
-
-  // if (prof == undefined) {
-  //   prof = {
-  //     id: 0,
-  //     nickName: "user",
-  //     userProfile: 0,
-  //     created_on: "",
-  //     img: "",
-  //     download: [],
-  //   };
-  // }
-  
 
   const favoriteIconFunc = async (e) => {
     e.stopPropagation();
@@ -100,14 +102,16 @@ export default function MessageCard({ post, comments }) {
       current: post.good,
       new: myprofile.id,
     };
-    // console.log("click");
     await fetchAsyncPatchLiked(packet);
   };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  
+
+  const handleClose = async () => {
+    setOpen(false);
+    await dispatch(resetPostEditState());
+};
 
   return (
     <div className="-mb-16">
@@ -118,7 +122,6 @@ export default function MessageCard({ post, comments }) {
         open={open}
         handleClose={handleClose}
       />
-      {/* <Link href={`/posts/${post.id}/`} passHref> */}
       <Card
         className={expanded ? "showContent test " : "hideContent test"}
         onClick={handleOpen}
@@ -129,30 +132,56 @@ export default function MessageCard({ post, comments }) {
             <div>
               <FavoriteCheckBox post={post} />
               <DownloadCheckBox post={post} />
+              {myprofile.id !== post.userPost ? (
+                <RotationSettings
+                  editState={editState}
+                  aria-edit={editState}
+                  aria-label="show more"
+                  onClick={handleEditClick}
+                >
+                  <SettingsIcon fontSize="large" />
+                </RotationSettings>
+              ) : (
+                <div></div>
+              )}
             </div>
           }
-          title={prof? prof.nickName:"" }
+          title={prof ? prof.nickName : ""}
           subheader={dateFunction(post.created_on)}
         />
         <CardContent>
-          <Typography variant="h6"  sx={{ fontWeight: 'bold' ,letterSpacing: 2 }} className="whitespace-pre-wrap" >
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", letterSpacing: 2 }}
+            className="whitespace-pre-wrap"
+          >
             {post.main}
           </Typography>
           <div className="float-right mt-2">
-            <Typography variant="body2" color="text.secondary" >
+            <Typography variant="body2" color="text.secondary">
               {post.booktitle}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              className="float-right"
+            >
               {post.author}
             </Typography>
           </div>
         </CardContent>
         <CardContent className="mt-10">
-          <Typography lineHeight={1.6} paragraph className="whitespace-pre-wrap">    {post.sub}</Typography>
+          <Typography
+            lineHeight={1.6}
+            paragraph
+            className="whitespace-pre-wrap"
+          >
+            {" "}
+            {post.sub}
+          </Typography>
           <div className=" w-full h-10"></div>
         </CardContent>
       </Card>
-      {/* </Link> */}
       <div
         className=" w-full h-20  text-center relative bottom-20 z-10 gradientWhite"
         {...longPressEvent}

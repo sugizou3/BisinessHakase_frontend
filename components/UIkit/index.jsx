@@ -15,7 +15,7 @@ export { default as dateFunction } from "./dateFunction.jsx";
 export { default as FavoriteCheckBox } from "./FavoriteCheckBox.jsx";
 export { default as DownloadCheckBox } from "./DownloadCheckBox.jsx";
 export { default as ProfileModal } from "./ProfileModal.jsx";
-export { default as RotateSettings } from "./RotateSettings.jsx";
+export { default as RotationSettings } from "./RotationSettings.jsx";
 export { default as TabGroup } from "./TabGroup.jsx";
 export { default as NameWithIcon } from "./NameWithIcon.jsx";
 export { default as CheckJWT } from "./CheckJWT.jsx";

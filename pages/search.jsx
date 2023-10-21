@@ -34,6 +34,7 @@ export default function Search() {
       (b, a) => new Date(a.created_on) - new Date(b.created_on)
     );
     setPost(posts);
+    console.log(post)
   }, [searchText]);
 
   const searchFunc = async (e) => {
@@ -48,7 +49,8 @@ export default function Search() {
     <div>
       <HeadTag title="search" />
       <CheckJWT/>
-      {post && post.map((post) => <MessageCard key={post.id} post={post} />)}
+      {post.length!=0 ? (post.map((post) => <MessageCard key={post.id} post={post} />)):(<Typography>検索ワードに該当する投稿はありません</Typography>)}
+      
     </div>
   );
 }

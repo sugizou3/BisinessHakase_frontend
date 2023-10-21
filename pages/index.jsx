@@ -12,13 +12,12 @@ import {
   fetchAsyncGetProfs,
   resetMyprofile,
   editNickname,
-  // selectDictionary,
-  // fetchAsyncGetDictionary,
 } from "src/reducks/auth/authSlice";
 import {
   selectDictionary,
   fetchAsyncGetDictionary,
 } from "src/reducks/dictionary/dictionarySlice";
+import { fetchAsyncGetSearchInfo } from "src/reducks/searchInfo/searchInfoSlice";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -30,6 +29,7 @@ export default function Home({ staticfilteredPosts, staticComments }) {
   const getProf = async () => {
     await dispatch(fetchAsyncGetProfs());
     await dispatch(fetchAsyncGetDictionary());
+    await dispatch(fetchAsyncGetSearchInfo());
   };
 
   const { data: posts } = useSWR(apiUrl, fetcher, {
