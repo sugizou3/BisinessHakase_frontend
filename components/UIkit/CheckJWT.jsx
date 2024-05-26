@@ -14,6 +14,7 @@ export default function CheckJWT() {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
+    // console.log('pass');
     if (isLoggedIn) {
       var existJWT = true //checkExist();
       // isLoggedInがTrueで JWTがある

@@ -33,6 +33,7 @@ export default function Search() {
   const [word, setWord] = useState("");
 
   useEffect(() => {
+    console.log(isLoggedIn);
     if (!isLoggedIn) {
       dispatch(setOpenModal());
     }

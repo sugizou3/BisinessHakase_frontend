@@ -43,19 +43,16 @@ export default function Mypage({ staticfilteredPosts, staticComments }) {
 
   useEffect(() => {
     const posts = [...filteredPosts];
-    console.log("pass");
     const comments = [...filteredComment];
     getProf()
     dispatch(setPost(posts));
     dispatch(setComment(comments));
-  }, []);
-
-
-  useEffect(() => {
     if (!isLoggedIn) {
       dispatch(setOpenModal());
     }
   }, []);
+
+
 
 
 

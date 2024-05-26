@@ -91,19 +91,6 @@ export default function MessageCard({ post, comments }) {
   });
   var prof = prof_array[0];
 
-  const favoriteIconFunc = async (e) => {
-    e.stopPropagation();
-    var packet = {
-      id: post.id,
-      main: post.main,
-      booktitle: post.booktitle,
-      author: post.author,
-      sub: post.sub,
-      current: post.good,
-      new: myprofile.id,
-    };
-    await fetchAsyncPatchLiked(packet);
-  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -120,6 +107,7 @@ export default function MessageCard({ post, comments }) {
         key={post.id}
         comments={comments}
         open={open}
+        setOpen = {setOpen}
         handleClose={handleClose}
       />
       <Card

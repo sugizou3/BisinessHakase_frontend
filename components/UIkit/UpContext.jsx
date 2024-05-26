@@ -34,7 +34,7 @@ import { selectProfile, selectProfiles } from "src/reducks/auth/authSlice";
 import { comment } from "postcss";
 import { PresentToAllTwoTone } from "@mui/icons-material";
 
-export default function UpContext({ post, comments, open, handleClose }) {
+export default function UpContext({ post, comments, open,setOpen, handleClose }) {
   const defaultOptions = {
     shouldPreventDefault: true,
     delay: 200,
@@ -90,7 +90,6 @@ export default function UpContext({ post, comments, open, handleClose }) {
 
   const update = async (e) => {
     e.preventDefault();
-    console.log("click");
     const packet = {
       id: post.id,
       main: main,
@@ -99,11 +98,15 @@ export default function UpContext({ post, comments, open, handleClose }) {
       sub: sub,
       word: word,
     };
+    setOpen(false)
+    console.log('tetete')
     await dispatch(fetchPostStart());
     // await dispatch(fetchAsyncNewPost(packet));
     await dispatch(fetchAsyncUpdatePost(packet));
     await dispatch(fetchPostEnd());
-    router.push("/");
+    // router.push("/");
+    
+    
   };
 
   const favoriteIconFunc = async () => {

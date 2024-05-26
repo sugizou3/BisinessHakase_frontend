@@ -149,7 +149,7 @@ export default function AuthModal({ openLimitation = false }) {
                           await dispatch(changeIsLoginTrueRegiFalse());
                         }}
                       >
-                        You dont have a account ?
+                        新規登録
                       </Typography>
                     </div>
                   </form>
@@ -258,7 +258,7 @@ export default function AuthModal({ openLimitation = false }) {
                           await dispatch(changeIsLoginTrueRegiFalse());
                         }}
                       >
-                        You already have a account ?
+                        すでにアカウントを持っている方
                       </Typography>
                     </div>
                   </form>

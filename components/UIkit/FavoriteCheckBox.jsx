@@ -9,15 +9,15 @@ import {
   fetchPostStart,
   fetchPostEnd,
 } from "src/reducks/post/postSlice";
-import { selectProfile } from "src/reducks/auth/authSlice";
+import { selectProfile,setOpenModal,isLoggedInOff } from "src/reducks/auth/authSlice";
 
 export default function FavoriteCheckBox({ post }) {
   const dispatch = useDispatch();
 
   const myprofile = useSelector(selectProfile);
 
-  const favoriteIconFunc = async () => {
-    //e.stopPropagation();
+  const favoriteIconFunc = async (e) => {
+    e.stopPropagation();
     var packet = {
       id: post.id,
       main: post.main,
@@ -26,33 +26,26 @@ export default function FavoriteCheckBox({ post }) {
       sub: post.sub,
       current: post.good,
       new: myprofile.id,
+      word:post.word
     };
-
-    console.log("tttt");
-
-    // const packet = {
-    //   ...post,
-    //   current: post.good,
-    //   new: myprofile.id,
-    // };
-    const goodInfo = { current: post.good, new: myprofile.id };
+    console.log(post.good);
 
     await dispatch(fetchPostStart());
-    //await dispatch(asyncPatchLiked(packet));
-    await dispatch(fetchAsyncPatchLiked(packet));
+    let test = await dispatch(fetchAsyncPatchLiked(packet));
+    if (test.meta.requestStatus == 'rejected') {
+      dispatch(setOpenModal())
+      dispatch(isLoggedInOff())
+    }
     await dispatch(fetchPostEnd());
   };
 
-  // useEffect(() => {
-  //   console.log(post.good);
-  // }, [post]);
 
   return (
     <Checkbox
       icon={<FavoriteBorder />}
       checkedIcon={<Favorite />}
       checked={post.good.some((good) => good === myprofile.id)}
-      onChange={favoriteIconFunc}
+      onClick={favoriteIconFunc}
     />
   );
 }

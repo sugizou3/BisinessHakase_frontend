@@ -1,24 +1,40 @@
-import * as React from "react";
-import { ProfileIcon,dateFunction } from ".";
-import { selectProfile } from "../../src/reducks/auth/authSlice.js";
+import { ProfileIcon, dateFunction } from ".";
+import { selectProfiles } from "../../src/reducks/auth/authSlice.js";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 
-export default function CommentBox({profile = null, text,comment }) {
-  const userProf = useSelector(selectProfile);
-  if (profile == null) {
-    profile = userProf;
-  }
+export default function CommentBox({ profile = null, text, comment }) {
+  const dispatch = useDispatch();
+
+  const handleEditClick = async () => {
+    await dispatch(setPostEditState());
+  };
+
+  useEffect(() => {
+    async () => {
+      await dispatch(fetchAsyncGetProfs());
+    };
+  }, []);
+
+  const profiles = useSelector(selectProfiles);
+
+  const prof_array = profiles.filter((prof) => {
+    return prof.userProfile === comment.userComment;
+  });
+  var prof = prof_array[0];
 
   return (
     <div className=" flex my-2">
-      <ProfileIcon profile={profile} />
+      <ProfileIcon profile={prof} />
       <div className="mx-3 w-full">
         <div className="flex gap-x-4 ">
-          <Typography className="">{profile.nickName}</Typography>
+          <Typography className="">{prof.nickName}</Typography>
           <Typography>{dateFunction(comment.created_on)}</Typography>
         </div>
-        <Typography className=" break-words pr-8 pb-2">{comment.text}</Typography>
+        <Typography className=" break-words pr-8 pb-2">
+          {comment.text}
+        </Typography>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Router } from "next/router";
 import Cookie from "universal-cookie";
+import { selectIsLoggedIn } from "src/reducks/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const cookie = new Cookie();
 
@@ -92,6 +95,7 @@ export const fetchAsyncPatchLiked = createAsyncThunk(
     const currentGood = good.current;
     const uploadData = new FormData();
 
+
     let isOverlapped = false;
     currentGood.forEach((current) => {
       //　すでにいいねを押されている投稿はtrueになってappendされず配列から消える　押されていない新規投稿はfalseで追加していく
@@ -101,29 +105,40 @@ export const fetchAsyncPatchLiked = createAsyncThunk(
         uploadData.append("good", String(current));
       }
     });
-
     if (!isOverlapped) {
       uploadData.append("good", String(good.new));
     } else if (currentGood.length === 1) {
-      uploadData.append("main", good.main);
-      uploadData.append("booktitle", good.booktitle);
-      uploadData.append("author", good.author);
-      uploadData.append("sub", good.sub);
-      uploadData.append("word", good.word);
-      const res = await axios.put(`${apiUrlPost}${good.id}/`, uploadData, {
+      uploadData.append("good", String(1));
+      // uploadData.append("main", good.main);
+      // uploadData.append("booktitle", good.booktitle);
+      // uploadData.append("author", good.author);
+      // uploadData.append("sub", good.sub);
+      // uploadData.append("word", good.word);
+      // uploadData.append("good", [0])
+      
+      // const res = await axios.put(`${apiUrlPost}${good.id}/`, uploadData, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `JWT ${localStorage.localJWT}`,
+      //   },
+      // });
+      // return res.data;
+    }
+    
+    try {
+      const res = await axios.patch(`${apiUrlPost}${good.id}/`, uploadData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${localStorage.localJWT}`,
         },
       });
       return res.data;
-    }
-    const res = await axios.patch(`${apiUrlPost}${good.id}/`, uploadData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
+    } catch (error) {
+      // エラーが発生した場合の処理
+      console.error('Error updating data:', error);
+      // エラーを適切に処理するために必要なコードを追加する
+      
+    };
     return res.data;
   }
 );

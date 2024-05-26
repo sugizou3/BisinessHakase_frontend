@@ -15,7 +15,7 @@ import {
   resetPostEditState,
 } from "src/reducks/post/postSlice";
 
-export default function ChipTag({ label = "", href = "search/", id, deleteWord, children }) {
+export default function ChipTag({ label = "", href = "search/", id, deleteWord, children, menu=false }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const editState = useSelector(selectPostEditState);
@@ -23,8 +23,13 @@ export default function ChipTag({ label = "", href = "search/", id, deleteWord, 
 
   const searchFunc = async (text) => {
     // e.preventDefault();
-    dispatch(setSearchText(text));
-    router.push("/search");
+    if (!menu) {
+      dispatch(setSearchText(text));
+      console.log('tetetet');
+      router.push("/search");
+    }
+    router.push(href);
+    
   };
 
   return (

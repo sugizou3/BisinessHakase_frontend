@@ -147,7 +147,7 @@ export const authSlice = createSlice({
     isLoadingAuth: false,
     searchText: "",
     verifyStates: false,
-    isLoggedIn: true,
+    isLoggedIn: false,
     myprofile: {
       id: 0,
       nickName: "",

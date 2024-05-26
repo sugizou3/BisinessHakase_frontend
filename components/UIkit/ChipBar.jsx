@@ -65,16 +65,16 @@ export default function ChipBar() {
   return (
     <div className="flex items-center py-2 px-4 overflow-x-scroll  hidden-scrollbar hidden-scrollbar::-webkit-scrollbar whitespace-nowrap scroll-touch ">
       <div className="flex items-center sm_NoneDisplay ">
-        <ChipTag label="ホーム" href="/">
+        <ChipTag label="ホーム" href="/" menu={true} >
           <HomeIcon color="action" />
         </ChipTag>
-        <ChipTag label="検索" href="/search">
+        <ChipTag label="検索" href="/search" menu={true}>
           <SearchIcon color="action" />
         </ChipTag>
-        <ChipTag label="作成" href="/create">
+        <ChipTag label="作成" href="/create" menu={true}>
           <BorderColorIcon color="action" />
         </ChipTag>
-        <ChipTag label="マイページ" href="/mypage">
+        <ChipTag label="マイページ" href="/mypage" menu={true}>
           <MenuBookIcon color="action" />
         </ChipTag>
         <Divider orientation="vertical" flexItem sx={{ mr: 2 }} />

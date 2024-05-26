@@ -5,9 +5,9 @@ import { MessageCard, CheckJWT, HeadTag } from "../components/UIkit";
 import { getAllPostsData } from "../lib/posts";
 import useSWR from "swr";
 import { setPost } from "../src/reducks/post/postSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 
-import { getComments, setComment } from "src/reducks/post/postSlice";
+import { getComments, setComment,selectPosts } from "src/reducks/post/postSlice";
 import {
   fetchAsyncGetProfs,
   resetMyprofile,
@@ -31,6 +31,7 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     await dispatch(fetchAsyncGetDictionary());
     await dispatch(fetchAsyncGetSearchInfo());
   };
+  const posts2 = useSelector(selectPosts);
 
   const { data: posts } = useSWR(apiUrl, fetcher, {
     fallbackData: staticfilteredPosts,
@@ -54,6 +55,8 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     dispatch(setPost(posts));
     dispatch(setComment(comments));
   }, []);
+
+  
   // console.log(comments);
 
   // useEffect(() => {
@@ -68,8 +71,8 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     <div>
       <HeadTag title="Home" />
       <CheckJWT />
-      {filteredPosts &&
-        filteredPosts.map((post) => (
+      {posts2 &&
+        posts2.map((post) => (
           <MessageCard
             key={post.id}
             post={post}

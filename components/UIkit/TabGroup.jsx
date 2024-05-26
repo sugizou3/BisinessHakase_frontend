@@ -41,7 +41,7 @@ export default function TabGroup() {
   const posts = useSelector(selectPosts);
 
   const myPosts = posts.filter((post) => post.userPost == myProf.userProfile);
-  const goodPosts = posts.filter((post) => post.good == myProf.userProfile);
+  const goodPosts = posts.filter((post) => post.good.includes(myProf.id));
   const downloadPosts = posts.filter(
     (post) => post.download == myProf.userProfile
   );
@@ -79,7 +79,7 @@ export default function TabGroup() {
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        {myPosts &&
+        {goodPosts &&
           goodPosts.map((post) => (
             <MessageCard
               key={post.id}
