@@ -3,8 +3,6 @@ import TextField from "@mui/material/TextField";
 import "tailwindcss/tailwind.css";
 import Button from "@mui/material/Button";
 import { AuthModal, CheckJWT, HeadTag } from "../components/UIkit";
-import Layout from "../components/Layout";
-import Cookie from "universal-cookie";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,9 +12,6 @@ import {
 } from "src/reducks/post/postSlice";
 import { useEffect } from "react";
 import {
-  fetchAsyncGetProfs,
-  resetMyprofile,
-  editNickname,
   setOpenModal,
   selectIsLoggedIn,
 } from "src/reducks/auth/authSlice";
@@ -39,37 +34,6 @@ export default function Search() {
     }
   }, []);
 
-  // const create = async (e) => {
-  //   e.preventDefault();
-  //   await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/posts/`, {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       main: main,
-  //       booktitle: booktitle,
-  //       author: author,
-  //       sub: sub,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `JWT ${localStorage.localJWT}`,
-  //     },
-  //   }).then((res) => {
-  //     if (res.status === 401) {
-  //       alert("JWT Token not valid");
-  //     }
-  //     router.push("/");
-  //     return;
-  //   });
-  //   // const packet = {
-  //   //   main: main,
-  //   //   booktitle: booktitle,
-  //   //   author: author,
-  //   //   sub: sub,
-  //   // }
-  //   // await dispatch
-  //   router.push("/");
-  // };
-
   const create = async (e) => {
     e.preventDefault();
     const packet = {
@@ -80,11 +44,7 @@ export default function Search() {
       word: word,
     };
     await dispatch(fetchPostStart());
-    // await dispatch(fetchAsyncNewPost(packet));
     var result = await dispatch(fetchAsyncNewPost(packet));
-    // setWord(result)
-    // console.log(result);
-    // console.log("tetetet")
     await dispatch(fetchPostEnd());
     router.push("/");
   };

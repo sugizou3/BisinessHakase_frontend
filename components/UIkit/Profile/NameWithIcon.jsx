@@ -1,5 +1,5 @@
 import "tailwindcss/tailwind.css";
-import { ProfileIcon,ProfileModal } from "./index";
+import { ProfileIcon, ProfileModal } from "../index";
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -10,7 +10,7 @@ import {
   resetEditState,
   selectProfile,
   setOpenProfile,
-} from "../../src/reducks/auth/authSlice";
+} from "../../../src/reducks/auth/authSlice";
 import { TextField, CircularProgress, IconButton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -32,7 +32,7 @@ export default function NameWithIcon() {
     dispatch(setOpenProfile());
   };
   const handleEditClick = async () => {
-    openProfileModal()
+    openProfileModal();
     if (editState) {
       await dispatch(resetEditState());
     } else {
@@ -41,20 +41,20 @@ export default function NameWithIcon() {
   };
 
   return (
-      <div className="flex flex-col items-center mt-5">
-        <ProfileIcon scale={120} />
-        <Typography sx={{mt:1}} >{myProf.nickName}</Typography>
-        <div className="relative left-20 bottom-12">
-            <RotationSettings
-              editState={editState}
-              aria-edit={editState}
-              aria-label="show more"
-              onClick={handleEditClick}
-            >
-              <SettingsIcon fontSize="large" />
-            </RotationSettings>
-          </div>
-          <ProfileModal />
+    <div className="flex flex-col items-center mt-5">
+      <ProfileIcon scale={120} />
+      <Typography sx={{ mt: 1 }}>{myProf.nickName}</Typography>
+      <div className="relative left-20 bottom-12">
+        <RotationSettings
+          editState={editState}
+          aria-edit={editState}
+          aria-label="show more"
+          onClick={handleEditClick}
+        >
+          <SettingsIcon fontSize="large" />
+        </RotationSettings>
       </div>
+      <ProfileModal />
+    </div>
   );
 }

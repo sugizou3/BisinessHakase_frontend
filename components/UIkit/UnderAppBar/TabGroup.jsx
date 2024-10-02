@@ -8,7 +8,7 @@ import Tab from "@mui/material/Tab";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CreateIcon from "@mui/icons-material/Create";
 import DownloadIcon from "@mui/icons-material/Download";
-import { MessageCard } from "./index";
+import { MessageCard } from "../index";
 import PropTypes from "prop-types";
 
 import { selectProfile, selectProfiles } from "src/reducks/auth/authSlice";

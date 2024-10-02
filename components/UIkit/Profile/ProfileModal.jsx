@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { ProfileIcon } from ".";
+import { ProfileIcon } from "..";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import { Formik } from "formik";
@@ -19,7 +19,7 @@ import {
   selectOpenProfile,
   selectProfile,
   fetchAsyncUpdateProf,
-} from "../../src/reducks/auth/authSlice";
+} from "../../../src/reducks/auth/authSlice";
 import { styled as muiStyled } from "@mui/material/styles";
 
 const RotationSettings = muiStyled((props) => {

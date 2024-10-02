@@ -1,9 +1,9 @@
 import * as React from "react";
 import Chip from "@mui/material/Chip";
-import useRouter from "next/router";
+import { useRouter } from "next/router";
 import setSearchText from "src/reducks/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import selectPostEditState from "src/reducks/post/postSlice";
+import { selectPostEditState } from "src/reducks/post/postSlice";
 
 export default function ChipTag({
   label = "",

@@ -8,17 +8,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Button from "@mui/material/Button";
-import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setOpenModal,
   selectProfile,
-  editNickname,
   resetOpenProfile,
   setOpenProfile,
   resetMyprofile,
-} from "../../src/reducks/auth/authSlice.js";
-import { AuthModal, ProfileIcon, ProfileModal } from ".";
+} from "../../../src/reducks/auth/authSlice.js";
+import { AuthModal, ProfileIcon, ProfileModal } from "../index.jsx";
 import { resetOpenNewPost } from "src/reducks/post/postSlice.js";
 import { Modal } from "@mui/material";
 
@@ -97,7 +95,7 @@ export default function ProRegIcon() {
           ログイン
         </Button>
       )}
-      <AuthModal/>
+      <AuthModal />
       <ProfileModal />
     </div>
   );

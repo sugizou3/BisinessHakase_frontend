@@ -1,6 +1,6 @@
-import { ProfileIcon, dateFunction } from ".";
-import { selectProfiles } from "../../src/reducks/auth/authSlice.js";
-import {React, useEffect} from "react";
+import { ProfileIcon, dateFunction } from "..";
+import { selectProfiles } from "../../../src/reducks/auth/authSlice.js";
+import { React, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from "@mui/material/Typography";
 

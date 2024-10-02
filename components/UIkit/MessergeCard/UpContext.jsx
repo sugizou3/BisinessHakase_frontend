@@ -16,7 +16,7 @@ import {
   FavoriteCheckBox,
   DownloadCheckBox,
   SearchWordBox,
-} from ".";
+} from "..";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
@@ -34,7 +34,13 @@ import { selectProfile, selectProfiles } from "src/reducks/auth/authSlice";
 import { comment } from "postcss";
 import { PresentToAllTwoTone } from "@mui/icons-material";
 
-export default function UpContext({ post, comments, open,setOpen, handleClose }) {
+export default function UpContext({
+  post,
+  comments,
+  open,
+  setOpen,
+  handleClose,
+}) {
   const defaultOptions = {
     shouldPreventDefault: true,
     delay: 200,
@@ -98,15 +104,13 @@ export default function UpContext({ post, comments, open,setOpen, handleClose })
       sub: sub,
       word: word,
     };
-    setOpen(false)
-    console.log('tetete')
+    setOpen(false);
+    console.log("tetete");
     await dispatch(fetchPostStart());
     // await dispatch(fetchAsyncNewPost(packet));
     await dispatch(fetchAsyncUpdatePost(packet));
     await dispatch(fetchPostEnd());
     // router.push("/");
-    
-    
   };
 
   const favoriteIconFunc = async () => {
@@ -152,17 +156,15 @@ export default function UpContext({ post, comments, open,setOpen, handleClose })
     });
     setWord(result);
   };
-  const setFunc = (array) =>{
+  const setFunc = (array) => {
     setWord(array);
-  }
+  };
 
- 
-
-  const addWord = async(text) => {
-    var id = await textToId(text)
+  const addWord = async (text) => {
+    var id = await textToId(text);
     console.log(id[0]);
-    var result = [...word,id[0]]
-    setFunc(result)
+    var result = [...word, id[0]];
+    setFunc(result);
     // setWord((preState) => [...preState, id[0]]);
     // console.log([...word,id[0]]);
     // console.log(word);
@@ -247,7 +249,11 @@ export default function UpContext({ post, comments, open,setOpen, handleClose })
                   variant="filled"
                 />
                 <div className="h-14" />
-                <SearchWordBox postWords={word} deleteWord={deleteWord} addWord={addWord} />
+                <SearchWordBox
+                  postWords={word}
+                  deleteWord={deleteWord}
+                  addWord={addWord}
+                />
                 <div className="mt-6 self-center">
                   <Button variant="contained" onClick={update}>
                     更新
@@ -288,10 +294,16 @@ export default function UpContext({ post, comments, open,setOpen, handleClose })
                   </Typography>
                   <div className=" w-full h-10"></div>
                 </CardContent>
-                <SearchWordBox postWords={word} deleteWord={deleteWord} addWord={addWord} />
+                <SearchWordBox
+                  postWords={word}
+                  deleteWord={deleteWord}
+                  addWord={addWord}
+                />
                 <CommentField postId={post.id} />
                 {comments &&
-                  comments.map((comment,index) => <CommentBox key={index} comment={comment} />)}
+                  comments.map((comment, index) => (
+                    <CommentBox key={index} comment={comment} />
+                  ))}
                 {/* <CommentBox comment={comments}/> */}
               </div>
             )}

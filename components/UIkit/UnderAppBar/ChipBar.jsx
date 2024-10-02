@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChipTag } from ".";
+import { ChipTag } from "..";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -48,7 +48,7 @@ export default function ChipBar() {
       count < tagNum
     ) {
       displayHistory.push(info);
-      count +=1;
+      count += 1;
     }
   });
 
@@ -64,7 +64,7 @@ export default function ChipBar() {
   return (
     <div className="flex items-center py-2 px-4 overflow-x-scroll  hidden-scrollbar hidden-scrollbar::-webkit-scrollbar whitespace-nowrap scroll-touch ">
       <div className="flex items-center sm_NoneDisplay ">
-        <ChipTag label="ホーム" href="/" menu={true} >
+        <ChipTag label="ホーム" href="/" menu={true}>
           <HomeIcon color="action" />
         </ChipTag>
         <ChipTag label="検索" href="/search" menu={true}>
@@ -78,7 +78,8 @@ export default function ChipBar() {
         </ChipTag>
         <Divider orientation="vertical" flexItem sx={{ mr: 2 }} />
       </div>
-      {texts && texts.map((text,index) => <ChipTag key={index} label={text} />)}
+      {texts &&
+        texts.map((text, index) => <ChipTag key={index} label={text} />)}
     </div>
   );
 }

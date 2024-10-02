@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ProfileIcon } from ".";
-import { selectProfile } from "../../src/reducks/auth/authSlice.js";
+import { ProfileIcon } from "..";
+import { selectProfile } from "../../../src/reducks/auth/authSlice.js";
 import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";

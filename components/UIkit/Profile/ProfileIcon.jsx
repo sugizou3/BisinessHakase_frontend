@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useSelector } from "react-redux";
 
-import { selectProfile } from "../../src/reducks/auth/authSlice.js";
+import { selectProfile } from "../../../src/reducks/auth/authSlice.js";
 import Avatar from "@mui/material/Avatar";
 
 function stringToColor(string) {
@@ -30,24 +30,19 @@ export default function ProfileIcon({ scale, profile = null, image = null }) {
   if (profile == null) {
     profile = userProf;
   }
-  var img = null
+  var img = null;
   if (image != null) {
-    img = image
-  }else if (profile.img) {
-    img = profile.img
+    img = image;
+  } else if (profile.img) {
+    img = profile.img;
   }
-  
 
   const textScale = scale * 0.6;
 
   return (
     <div>
-      { img || profile.nickName == "anonimous"  ? (
-        <Avatar
-          alt="Who?"
-          src={img}
-          sx={{ width: scale, height: scale }}
-        />
+      {img || profile.nickName == "anonimous" ? (
+        <Avatar alt="Who?" src={img} sx={{ width: scale, height: scale }} />
       ) : (
         <Avatar
           sx={{

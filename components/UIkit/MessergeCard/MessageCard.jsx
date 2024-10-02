@@ -14,13 +14,13 @@ import {
   dateFunction,
   FavoriteCheckBox,
   DownloadCheckBox,
-} from ".";
+} from "..";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectProfiles,
   fetchAsyncGetProfs,
   selectProfile,
-} from "../../src/reducks/auth/authSlice.js";
+} from "../../../src/reducks/auth/authSlice.js";
 import {
   fetchAsyncPatchLiked,
   selectPostEditState,
@@ -55,7 +55,7 @@ export default function MessageCard({ post, comments }) {
   const editState = useSelector(selectPostEditState);
 
   const handleEditClick = async () => {
-      await dispatch(setPostEditState());
+    await dispatch(setPostEditState());
   };
 
   useEffect(() => {
@@ -89,14 +89,13 @@ export default function MessageCard({ post, comments }) {
   });
   var prof = prof_array[0];
 
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
   const handleClose = async () => {
     setOpen(false);
     await dispatch(resetPostEditState());
-};
+  };
 
   return (
     <div className="-mb-16">
@@ -105,7 +104,7 @@ export default function MessageCard({ post, comments }) {
         key={post.id}
         comments={comments}
         open={open}
-        setOpen = {setOpen}
+        setOpen={setOpen}
         handleClose={handleClose}
       />
       <Card

@@ -1,22 +1,18 @@
 import { useEffect } from "react";
 import "tailwindcss/tailwind.css";
-import Layout from "../components/Layout";
 import { MessageCard, CheckJWT, HeadTag } from "../components/UIkit";
 import { getAllPostsData } from "../lib/posts";
 import useSWR from "swr";
 import { setPost } from "../src/reducks/post/postSlice";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getComments, setComment,selectPosts } from "src/reducks/post/postSlice";
 import {
-  fetchAsyncGetProfs,
-  resetMyprofile,
-  editNickname,
-} from "src/reducks/auth/authSlice";
-import {
-  selectDictionary,
-  fetchAsyncGetDictionary,
-} from "src/reducks/dictionary/dictionarySlice";
+  getComments,
+  setComment,
+  selectPosts,
+} from "src/reducks/post/postSlice";
+import { fetchAsyncGetProfs } from "src/reducks/auth/authSlice";
+import { fetchAsyncGetDictionary } from "src/reducks/dictionary/dictionarySlice";
 import { fetchAsyncGetSearchInfo } from "src/reducks/searchInfo/searchInfoSlice";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -55,17 +51,6 @@ export default function Home({ staticfilteredPosts, staticComments }) {
     dispatch(setPost(posts));
     dispatch(setComment(comments));
   }, []);
-
-  
-  // console.log(comments);
-
-  // useEffect(() => {
-  //   var existJWT = checkJWT();
-  //   if (existJWT) {
-  // } else {
-  //   dispatch(resetMyprofile())
-  // }
-  // }, []);
 
   return (
     <div>
