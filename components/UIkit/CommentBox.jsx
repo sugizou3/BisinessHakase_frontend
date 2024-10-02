@@ -1,15 +1,11 @@
 import { ProfileIcon, dateFunction } from ".";
 import { selectProfiles } from "../../src/reducks/auth/authSlice.js";
-import React, { useState, useEffect, useCallback } from "react";
+import {React, useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from "@mui/material/Typography";
 
-export default function CommentBox({ profile = null, text, comment }) {
+export default function CommentBox({ comment }) {
   const dispatch = useDispatch();
-
-  const handleEditClick = async () => {
-    await dispatch(setPostEditState());
-  };
 
   useEffect(() => {
     async () => {

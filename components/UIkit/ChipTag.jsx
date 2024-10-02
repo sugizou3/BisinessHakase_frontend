@@ -1,21 +1,18 @@
 import * as React from "react";
-import Link from "next/link";
 import Chip from "@mui/material/Chip";
-import { useRouter } from "next/router";
-import {
-  setSearchText,
-  resetSearchText,
-  selectSearchText,
-} from "src/reducks/auth/authSlice";
+import useRouter from "next/router";
+import setSearchText from "src/reducks/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchAsyncPatchLiked,
-  selectPostEditState,
-  setPostEditState,
-  resetPostEditState,
-} from "src/reducks/post/postSlice";
+import selectPostEditState from "src/reducks/post/postSlice";
 
-export default function ChipTag({ label = "", href = "search/", id, deleteWord, children, menu=false }) {
+export default function ChipTag({
+  label = "",
+  href = "search/",
+  id,
+  deleteWord,
+  children,
+  menu = false,
+}) {
   const router = useRouter();
   const dispatch = useDispatch();
   const editState = useSelector(selectPostEditState);
@@ -25,11 +22,10 @@ export default function ChipTag({ label = "", href = "search/", id, deleteWord, 
     // e.preventDefault();
     if (!menu) {
       dispatch(setSearchText(text));
-      console.log('tetetet');
+      console.log("tetetet");
       router.push("/search");
     }
     router.push(href);
-    
   };
 
   return (

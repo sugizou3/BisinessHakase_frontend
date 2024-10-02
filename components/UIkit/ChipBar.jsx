@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "next/link";
 import { ChipTag } from ".";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,7 +7,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Divider from "@mui/material/Divider";
 import { selectSearchInfo } from "src/reducks/searchInfo/searchInfoSlice";
 import { selectProfile } from "src/reducks/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectDictionary } from "src/reducks/dictionary/dictionarySlice";
 
 export default function ChipBar() {

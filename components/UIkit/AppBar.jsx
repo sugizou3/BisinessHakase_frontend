@@ -1,9 +1,7 @@
 import { SearchComponent } from "./index.jsx";
 import { ProRegIcon } from ".";
 import { useDispatch } from "react-redux";
-import PentagonIcon from "@mui/icons-material/Pentagon";
 import { createTheme } from "@mui/material/styles";
-import { pink } from "@mui/material/colors";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 
 const theme = createTheme({

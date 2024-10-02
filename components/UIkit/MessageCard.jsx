@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { styled as muiStyled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import DownloadIcon from "@mui/icons-material/Download";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {
   ProfileIcon,
@@ -120,7 +118,7 @@ export default function MessageCard({ post, comments }) {
             <div>
               <FavoriteCheckBox post={post} />
               <DownloadCheckBox post={post} />
-              {myprofile.id !== post.userPost ? (
+              {myprofile.id == post.userPost ? (
                 <RotationSettings
                   editState={editState}
                   aria-edit={editState}
