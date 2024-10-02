@@ -35,6 +35,7 @@ export default function AuthModal({ openLimitation = false }) {
   const isLoginTrueRegiFalse = useSelector(selectIsLoginTrueRegiFalse);
   const isLoadingAuth = useSelector(selectIsLoadingAuth);
   const dispatch = useDispatch();
+  var values = {}
 
   return (
     <div>
@@ -52,8 +53,10 @@ export default function AuthModal({ openLimitation = false }) {
               initialErrors={{ email: "required" }}
               initialValues={{ email: "", password: "" }}
               onSubmit={async (values) => {
+                console.log(values);
                 await dispatch(fetchCredStart());
                 const result = await dispatch(fetchAsyncLogin(values));
+                console.log('test3');
                 if (fetchAsyncLogin.fulfilled.match(result)) {
                   await dispatch(fetchAsyncGetProfs());
 
@@ -161,6 +164,7 @@ export default function AuthModal({ openLimitation = false }) {
               initialErrors={{ email: "required" }}
               initialValues={{ email: "", password: "" }}
               onSubmit={async (values) => {
+                console.log('test2');
                 await dispatch(fetchCredStart());
                 const resultReg = await dispatch(fetchAsyncRegister(values));
 
